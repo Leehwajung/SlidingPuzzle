@@ -51,11 +51,16 @@ protected:
 // 작업입니다.
 protected:
 	void AdjustHorzScroll(CListBox& wndListBox);
+public:
+	void ToggleShow();
+	void Show(BOOL bShow);
+
 	void AddResult(LPCTSTR str);
 
 // 구현입니다.
 public:
 	virtual ~COutputWnd();
+	
 
 // 생성된 메시지 맵 함수
 protected:

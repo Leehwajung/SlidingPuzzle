@@ -104,6 +104,22 @@ void COutputWnd::AdjustHorzScroll(CListBox& wndListBox)
 	dc.SelectObject(pOldFont);
 }
 
+void COutputWnd::ToggleShow()
+{
+	Show(!IsPaneVisible());
+}
+
+void COutputWnd::Show(BOOL bShow)
+{
+	if (bShow) {	// Pane¿ª ∫∏¿”
+		ShowPane(TRUE, FALSE, TRUE);
+		AdjustDockingLayout();
+	}
+	else {			// Pane¿ª º˚±Ë
+		CDockablePane::OnPressCloseButton();
+	}
+}
+
 void COutputWnd::AddResult(LPCTSTR str)
 {
 	m_wndOutputResult.AddString(str);

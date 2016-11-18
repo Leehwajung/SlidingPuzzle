@@ -238,14 +238,7 @@ void CMainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 
 void CMainFrame::OnViewOutputWnd()
 {
-	if (m_wndOutput.IsPaneVisible()) {				// Pane이 보이는 상태이면
-		m_wndOutput.ShowPane(FALSE, FALSE, FALSE);	// Pane을 숨김
-	}
-	else {											// Pane이 보이는 상태가 아니면
-		m_wndOutput.ShowPane(TRUE, FALSE, TRUE);	// Pane을 보임
-	}
-
-	m_wndOutput.AdjustDockingLayout();				// 레이아웃 재계산
+	m_wndOutput.ToggleShow();
 }
 
 void CMainFrame::OnUpdateViewOutputWnd(CCmdUI *pCmdUI)
