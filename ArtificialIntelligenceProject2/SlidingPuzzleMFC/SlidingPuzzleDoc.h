@@ -12,13 +12,13 @@
 // SlidingPuzzleDoc.h : CSlidingPuzzleDoc 클래스의 인터페이스
 //
 
-
 #pragma once
 
 
 class CSlidingPuzzleDoc : public CDocument
 {
-protected: // serialization에서만 만들어집니다.
+// 생성입니다.
+protected:	// serialization에서만 만들어집니다.
 	CSlidingPuzzleDoc();
 	DECLARE_DYNCREATE(CSlidingPuzzleDoc)
 

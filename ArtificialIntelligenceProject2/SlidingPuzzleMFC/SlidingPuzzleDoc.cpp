@@ -27,6 +27,7 @@
 #define new DEBUG_NEW
 #endif
 
+
 // CSlidingPuzzleDoc
 
 IMPLEMENT_DYNCREATE(CSlidingPuzzleDoc, CDocument)
@@ -57,8 +58,6 @@ BOOL CSlidingPuzzleDoc::OnNewDocument()
 
 	return TRUE;
 }
-
-
 
 
 // CSlidingPuzzleDoc serialization
@@ -128,6 +127,7 @@ void CSlidingPuzzleDoc::SetSearchContent(const CString& value)
 }
 
 #endif // SHARED_HANDLERS
+
 
 // CSlidingPuzzleDoc Áø´Ü
 

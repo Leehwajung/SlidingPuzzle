@@ -32,9 +32,8 @@
 IMPLEMENT_DYNCREATE(CSlidingPuzzleView, CView)
 
 BEGIN_MESSAGE_MAP(CSlidingPuzzleView, CView)
-	ON_WM_CONTEXTMENU()
-	ON_WM_RBUTTONUP()
 END_MESSAGE_MAP()
+
 
 // CSlidingPuzzleView 생성/소멸
 
@@ -56,6 +55,7 @@ BOOL CSlidingPuzzleView::PreCreateWindow(CREATESTRUCT& cs)
 	return CView::PreCreateWindow(cs);
 }
 
+
 // CSlidingPuzzleView 그리기
 
 void CSlidingPuzzleView::OnDraw(CDC* /*pDC*/)
@@ -66,19 +66,6 @@ void CSlidingPuzzleView::OnDraw(CDC* /*pDC*/)
 		return;
 
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
-}
-
-void CSlidingPuzzleView::OnRButtonUp(UINT /* nFlags */, CPoint point)
-{
-	ClientToScreen(&point);
-	OnContextMenu(this, point);
-}
-
-void CSlidingPuzzleView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
-{
-#ifndef SHARED_HANDLERS
-	theApp.GetContextMenuManager()->ShowPopupMenu(IDR_POPUP_EDIT, point.x, point.y, this, TRUE);
-#endif
 }
 
 
@@ -104,3 +91,4 @@ CSlidingPuzzleDoc* CSlidingPuzzleView::GetDocument() const // 디버그되지 않은 버
 
 
 // CSlidingPuzzleView 메시지 처리기
+

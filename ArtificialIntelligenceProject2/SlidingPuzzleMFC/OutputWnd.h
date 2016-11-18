@@ -9,10 +9,11 @@
 // Copyright (C) Microsoft Corporation
 // All rights reserved.
 
+// OutputWnd.h : COutputList 창
+//
+
 #pragma once
 
-/////////////////////////////////////////////////////////////////////////////
-// COutputList 창
 
 class COutputList : public CListBox
 {
@@ -24,6 +25,7 @@ public:
 public:
 	virtual ~COutputList();
 
+// 생성된 메시지 맵 함수
 protected:
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	afx_msg void OnEditCopy();
@@ -44,22 +46,18 @@ public:
 // 특성입니다.
 protected:
 	CMFCTabCtrl	m_wndTabs;
+	COutputList m_wndOutputResult;
 
-	COutputList m_wndOutputBuild;
-	COutputList m_wndOutputDebug;
-	COutputList m_wndOutputFind;
-
+// 작업입니다.
 protected:
-	void FillBuildWindow();
-	void FillDebugWindow();
-	void FillFindWindow();
-
 	void AdjustHorzScroll(CListBox& wndListBox);
+	void AddResult(LPCTSTR str);
 
 // 구현입니다.
 public:
 	virtual ~COutputWnd();
 
+// 생성된 메시지 맵 함수
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 	afx_msg void OnSize(UINT nType, int cx, int cy);

@@ -21,6 +21,7 @@
 #define new DEBUG_NEW
 #endif
 
+
 // CMainFrame
 
 IMPLEMENT_DYNCREATE(CMainFrame, CFrameWndEx)
@@ -29,8 +30,11 @@ BEGIN_MESSAGE_MAP(CMainFrame, CFrameWndEx)
 	ON_WM_CREATE()
 	ON_COMMAND_RANGE(ID_VIEW_APPLOOK_WIN_2000, ID_VIEW_APPLOOK_WINDOWS_7, &CMainFrame::OnApplicationLook)
 	ON_UPDATE_COMMAND_UI_RANGE(ID_VIEW_APPLOOK_WIN_2000, ID_VIEW_APPLOOK_WINDOWS_7, &CMainFrame::OnUpdateApplicationLook)
+	ON_COMMAND(ID_VIEW_OUTPUT, &CMainFrame::OnViewOutputWnd)
+	ON_UPDATE_COMMAND_UI(ID_VIEW_OUTPUT, &CMainFrame::OnUpdateViewOutputWnd)
 	ON_WM_SETTINGCHANGE()
 END_MESSAGE_MAP()
+
 
 // CMainFrame 생성/소멸
 
@@ -123,6 +127,7 @@ void CMainFrame::SetDockingWindowIcons(BOOL bHiColorIcons)
 	m_wndOutput.SetIcon(hOutputBarIcon, FALSE);
 
 }
+
 
 // CMainFrame 진단
 
@@ -225,9 +230,25 @@ void CMainFrame::OnUpdateApplicationLook(CCmdUI* pCmdUI)
 	pCmdUI->SetRadio(theApp.m_nAppLook == pCmdUI->m_nID);
 }
 
-
 void CMainFrame::OnSettingChange(UINT uFlags, LPCTSTR lpszSection)
 {
 	CFrameWndEx::OnSettingChange(uFlags, lpszSection);
 	m_wndOutput.UpdateFonts();
+}
+
+void CMainFrame::OnViewOutputWnd()
+{
+	if (m_wndOutput.IsPaneVisible()) {				// Pane이 보이는 상태이면
+		m_wndOutput.ShowPane(FALSE, FALSE, FALSE);	// Pane을 숨김
+	}
+	else {											// Pane이 보이는 상태가 아니면
+		m_wndOutput.ShowPane(TRUE, FALSE, TRUE);	// Pane을 보임
+	}
+
+	m_wndOutput.AdjustDockingLayout();				// 레이아웃 재계산
+}
+
+void CMainFrame::OnUpdateViewOutputWnd(CCmdUI *pCmdUI)
+{
+	pCmdUI->SetCheck(m_wndOutput.IsPaneVisible());	// Pane이 보이는 여부로 체크박스 설정
 }

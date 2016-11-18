@@ -59,6 +59,7 @@ CSlidingPuzzleApp::CSlidingPuzzleApp()
 	// InitInstance에 모든 중요한 초기화 작업을 배치합니다.
 }
 
+
 // 유일한 CSlidingPuzzleApp 개체입니다.
 
 CSlidingPuzzleApp theApp;
@@ -149,8 +150,6 @@ int CSlidingPuzzleApp::ExitInstance()
 	return CWinAppEx::ExitInstance();
 }
 
-// CSlidingPuzzleApp 메시지 처리기
-
 
 // 응용 프로그램 정보에 사용되는 CAboutDlg 대화 상자입니다.
 
@@ -184,12 +183,14 @@ void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
+
 // 대화 상자를 실행하기 위한 응용 프로그램 명령입니다.
 void CSlidingPuzzleApp::OnAppAbout()
 {
 	CAboutDlg aboutDlg;
 	aboutDlg.DoModal();
 }
+
 
 // CSlidingPuzzleApp 사용자 지정 로드/저장 메서드
 
@@ -210,7 +211,6 @@ void CSlidingPuzzleApp::SaveCustomState()
 {
 }
 
+
 // CSlidingPuzzleApp 메시지 처리기
-
-
 

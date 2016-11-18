@@ -185,7 +185,7 @@ BEGIN
     END
     POPUP "도움말(&H)"
     BEGIN
-        MENUITEM "SlidingPuzzle 정보(&A)...",     ID_APP_ABOUT
+        MENUITEM "Sliding Puzzle 정보(&A)...",     ID_APP_ABOUT
     END
 END
 
@@ -217,7 +217,7 @@ END
 
 IDR_HELP_MENU MENU
 BEGIN
-    MENUITEM "SlidingPuzzle 정보(&A)...",     ID_APP_ABOUT
+    MENUITEM "Sliding Puzzle 정보(&A)...",     ID_APP_ABOUT
 END
 
 IDR_THEME_MENU MENU
@@ -260,11 +260,11 @@ END
 
 IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "SlidingPuzzle 정보"
+CAPTION "Sliding Puzzle 정보"
 FONT 9, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     ICON            IDR_MAINFRAME,IDC_STATIC,14,14,21,20
-    LTEXT           "SlidingPuzzle, 버전 1.0",IDC_STATIC,42,14,114,8,SS_NOPREFIX
+    LTEXT           "Sliding Puzzle, 버전 1.0",IDC_STATIC,42,14,114,8,SS_NOPREFIX
     LTEXT           "Copyright (C) 2016",IDC_STATIC,42,26,114,8
     DEFPUSHBUTTON   "확인",IDOK,113,41,50,14,WS_GROUP
 END
@@ -348,12 +348,12 @@ END
 
 STRINGTABLE
 BEGIN
-    IDR_MAINFRAME           "SlidingPuzzle\n\nSlidingPuzzle\nSliding Puzzle Save Files (*.pzl)\n.pzl\nSlidingPuzzle.Document\nSlidingPuzzle.Document"
+    IDR_MAINFRAME           "Sliding Puzzle\n\nSlidingPuzzle\nSliding Puzzle Save Files (*.pzl)\n.pzl\nSlidingPuzzle.Document\nSlidingPuzzle.Document"
 END
 
 STRINGTABLE
 BEGIN
-    AFX_IDS_APP_TITLE       "SlidingPuzzle"
+    AFX_IDS_APP_TITLE       "Sliding Puzzle"
     AFX_IDS_IDLEMESSAGE     "준비"
 END
 
@@ -369,11 +369,11 @@ END
 
 STRINGTABLE
 BEGIN
-    ID_FILE_NEW             "새 문서를 만듭니다.\n새로 만들기"
-    ID_FILE_OPEN            "기존 문서를 엽니다.\n열기"
+    ID_FILE_NEW             "새 게임을 시작합니다.\n새 게임"
+    ID_FILE_OPEN            "기존 게임을 이어서 합니다.\n이어 하기"
     ID_FILE_CLOSE           "활성 문서를 닫습니다.\n닫기"
-    ID_FILE_SAVE            "활성 문서를 저장합니다.\n저장"
-    ID_FILE_SAVE_AS         "활성 문서를 새 이름으로 저장합니다.\n다른 이름으로 저장"
+    ID_FILE_SAVE            "현재 게임을 저장합니다.\n저장"
+    ID_FILE_SAVE_AS         "현재 게임을 새 이름으로 저장합니다.\n다른 이름으로 저장"
 END
 
 STRINGTABLE
@@ -432,6 +432,7 @@ STRINGTABLE
 BEGIN
     ID_VIEW_TOOLBAR         "도구 모음을 표시하거나 숨깁니다.\n도구 모음 설정/해제"
     ID_VIEW_STATUS_BAR      "상태 표시줄을 표시하거나 숨깁니다.\n상태 표시줄 설정/해제"
+    ID_VIEW_OUTPUT          "로그창을 표시하거나 숨깁니다.\n로그창 설정/해제"
 END
 
 STRINGTABLE
@@ -459,14 +460,12 @@ END
 
 STRINGTABLE
 BEGIN
-    IDS_OUTPUT_WND          "출력"
+    IDS_OUTPUT_WND          "로그"
 END
 
 STRINGTABLE
 BEGIN
-    IDS_BUILD_TAB           "빌드"
-    IDS_DEBUG_TAB           "디버그"
-    IDS_FIND_TAB            "찾기"
+    IDS_RESULT_TAB          "결과"
 END
 
 STRINGTABLE

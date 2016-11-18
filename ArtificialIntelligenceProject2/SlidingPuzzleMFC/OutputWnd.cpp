@@ -9,6 +9,9 @@
 // Copyright (C) Microsoft Corporation
 // All rights reserved.
 
+// OutputWnd.cpp : COutputWnd 클래스 및 COutputList 클래스의 구현
+//
+
 #include "stdafx.h"
 
 #include "OutputWnd.h"
@@ -21,8 +24,8 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-/////////////////////////////////////////////////////////////////////////////
-// COutputBar
+
+// COutputWnd
 
 COutputWnd::COutputWnd()
 {
@@ -49,18 +52,16 @@ int COutputWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (!m_wndTabs.Create(CMFCTabCtrl::STYLE_FLAT, rectDummy, this, 1))
 	{
 		TRACE0("출력 탭 창을 만들지 못했습니다.\n");
-		return -1;      // 만들지 못했습니다.
+		return -1;	// 만들지 못했습니다.
 	}
 
 	// 출력 창을 만듭니다.
 	const DWORD dwStyle = LBS_NOINTEGRALHEIGHT | WS_CHILD | WS_VISIBLE | WS_HSCROLL | WS_VSCROLL;
 
-	if (!m_wndOutputBuild.Create(dwStyle, rectDummy, &m_wndTabs, 2) ||
-		!m_wndOutputDebug.Create(dwStyle, rectDummy, &m_wndTabs, 3) ||
-		!m_wndOutputFind.Create(dwStyle, rectDummy, &m_wndTabs, 4))
+	if (!m_wndOutputResult.Create(dwStyle, rectDummy, &m_wndTabs, 2))
 	{
 		TRACE0("출력 창을 만들지 못했습니다.\n");
-		return -1;      // 만들지 못했습니다.
+		return -1;	// 만들지 못했습니다.
 	}
 
 	UpdateFonts();
@@ -69,20 +70,9 @@ int COutputWnd::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	BOOL bNameValid;
 
 	// 탭에 목록 창을 연결합니다.
-	bNameValid = strTabName.LoadString(IDS_BUILD_TAB);
+	bNameValid = strTabName.LoadString(IDS_RESULT_TAB);
 	ASSERT(bNameValid);
-	m_wndTabs.AddTab(&m_wndOutputBuild, strTabName, (UINT)0);
-	bNameValid = strTabName.LoadString(IDS_DEBUG_TAB);
-	ASSERT(bNameValid);
-	m_wndTabs.AddTab(&m_wndOutputDebug, strTabName, (UINT)1);
-	bNameValid = strTabName.LoadString(IDS_FIND_TAB);
-	ASSERT(bNameValid);
-	m_wndTabs.AddTab(&m_wndOutputFind, strTabName, (UINT)2);
-
-	// 출력 탭을 더미 텍스트로 채웁니다.
-	FillBuildWindow();
-	FillDebugWindow();
-	FillFindWindow();
+	m_wndTabs.AddTab(&m_wndOutputResult, strTabName, (UINT)0);
 
 	return 0;
 }
@@ -114,36 +104,19 @@ void COutputWnd::AdjustHorzScroll(CListBox& wndListBox)
 	dc.SelectObject(pOldFont);
 }
 
-void COutputWnd::FillBuildWindow()
+void COutputWnd::AddResult(LPCTSTR str)
 {
-	m_wndOutputBuild.AddString(_T("여기에 빌드 출력이 표시됩니다."));
-	m_wndOutputBuild.AddString(_T("출력이 목록 뷰 행에 표시되지만"));
-	m_wndOutputBuild.AddString(_T("표시 방법을 원하는 대로 변경할 수 있습니다."));
-}
-
-void COutputWnd::FillDebugWindow()
-{
-	m_wndOutputDebug.AddString(_T("여기에 디버그 출력이 표시됩니다."));
-	m_wndOutputDebug.AddString(_T("출력이 목록 뷰 행에 표시되지만"));
-	m_wndOutputDebug.AddString(_T("표시 방법을 원하는 대로 변경할 수 있습니다."));
-}
-
-void COutputWnd::FillFindWindow()
-{
-	m_wndOutputFind.AddString(_T("여기에 찾기 출력이 표시됩니다."));
-	m_wndOutputFind.AddString(_T("출력이 목록 뷰 행에 표시되지만"));
-	m_wndOutputFind.AddString(_T("표시 방법을 원하는 대로 변경할 수 있습니다."));
+	m_wndOutputResult.AddString(str);
 }
 
 void COutputWnd::UpdateFonts()
 {
-	m_wndOutputBuild.SetFont(&afxGlobalData.fontRegular);
-	m_wndOutputDebug.SetFont(&afxGlobalData.fontRegular);
-	m_wndOutputFind.SetFont(&afxGlobalData.fontRegular);
+	m_wndOutputResult.SetFont(&afxGlobalData.fontRegular);
 }
 
-/////////////////////////////////////////////////////////////////////////////
-// COutputList1
+
+
+// COutputList
 
 COutputList::COutputList()
 {
@@ -160,7 +133,8 @@ BEGIN_MESSAGE_MAP(COutputList, CListBox)
 	ON_COMMAND(ID_VIEW_OUTPUTWND, OnViewOutput)
 	ON_WM_WINDOWPOSCHANGING()
 END_MESSAGE_MAP()
-/////////////////////////////////////////////////////////////////////////////
+
+
 // COutputList 메시지 처리기
 
 void COutputList::OnContextMenu(CWnd* /*pWnd*/, CPoint point)
@@ -204,6 +178,5 @@ void COutputList::OnViewOutput()
 		pMainFrame->SetFocus();
 		pMainFrame->ShowPane(pParentBar, FALSE, FALSE, FALSE);
 		pMainFrame->RecalcLayout();
-
 	}
 }

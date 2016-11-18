@@ -15,15 +15,17 @@
 #pragma once
 #include "OutputWnd.h"
 
+
 class CMainFrame : public CFrameWndEx
 {
-	
-protected: // serialization에서만 만들어집니다.
+// 생성입니다.
+protected:	// serialization에서만 만들어집니다.
 	CMainFrame();
 	DECLARE_DYNCREATE(CMainFrame)
 
 // 특성입니다.
 public:
+	COutputWnd& GetWndOutput();
 
 // 작업입니다.
 public:
@@ -40,12 +42,13 @@ public:
 	virtual void Dump(CDumpContext& dc) const;
 #endif
 
-protected:  // 컨트롤 모음이 포함된 멤버입니다.
-	CMFCRibbonBar     m_wndRibbonBar;
+// 컨트롤 모음이 포함된 멤버입니다.
+protected:
+	CMFCRibbonBar m_wndRibbonBar;
 	CMFCRibbonApplicationButton m_MainButton;
 	CMFCToolBarImages m_PanelImages;
-	CMFCRibbonStatusBar  m_wndStatusBar;
-	COutputWnd        m_wndOutput;
+	CMFCRibbonStatusBar m_wndStatusBar;
+	COutputWnd m_wndOutput;
 
 // 생성된 메시지 맵 함수
 protected:
@@ -53,10 +56,16 @@ protected:
 	afx_msg void OnApplicationLook(UINT id);
 	afx_msg void OnUpdateApplicationLook(CCmdUI* pCmdUI);
 	afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
+	afx_msg void OnViewOutputWnd();
+	afx_msg void OnUpdateViewOutputWnd(CCmdUI *pCmdUI);
 	DECLARE_MESSAGE_MAP()
 
 	BOOL CreateDockingWindows();
 	void SetDockingWindowIcons(BOOL bHiColorIcons);
 };
 
+inline COutputWnd& CMainFrame::GetWndOutput()
+{
+	return m_wndOutput;
+}
 
