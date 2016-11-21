@@ -18,25 +18,25 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SlidingPuzzle.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="targetver.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="MainFrm.h">
+    <ClInclude Include="Resource.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="SlidingPuzzleDoc.h">
+    <ClInclude Include="SlidingPuzzleApp.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="SlidingPuzzleView.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Resource.h">
+    <ClInclude Include="SlidingPuzzleDoc.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="OutputWnd.h">
@@ -44,19 +44,19 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SlidingPuzzle.cpp">
+    <ClCompile Include="stdafx.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="SlidingPuzzleApp.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="MainFrm.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="SlidingPuzzleDoc.cpp">
+    <ClCompile Include="SlidingPuzzleView.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="SlidingPuzzleView.cpp">
+    <ClCompile Include="SlidingPuzzleDoc.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="OutputWnd.cpp">

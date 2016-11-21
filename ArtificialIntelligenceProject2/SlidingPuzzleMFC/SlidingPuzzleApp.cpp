@@ -9,13 +9,13 @@
 // Copyright (C) Microsoft Corporation
 // All rights reserved.
 
-// SlidingPuzzle.cpp : 응용 프로그램에 대한 클래스 동작을 정의합니다.
+// SlidingPuzzleApp.cpp : 응용 프로그램에 대한 클래스 동작을 정의합니다.
 //
 
 #include "stdafx.h"
 #include "afxwinappex.h"
 #include "afxdialogex.h"
-#include "SlidingPuzzle.h"
+#include "SlidingPuzzleApp.h"
 #include "MainFrm.h"
 
 #include "SlidingPuzzleDoc.h"

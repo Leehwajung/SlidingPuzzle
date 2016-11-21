@@ -9,7 +9,7 @@
 // Copyright (C) Microsoft Corporation
 // All rights reserved.
 
-// SlidingPuzzle.h : SlidingPuzzle 응용 프로그램에 대한 주 헤더 파일
+// SlidingPuzzleApp.h : SlidingPuzzle 응용 프로그램에 대한 주 헤더 파일
 //
 
 #pragma once
@@ -22,7 +22,7 @@
 
 
 // CSlidingPuzzleApp:
-// 이 클래스의 구현에 대해서는 SlidingPuzzle.cpp을 참조하십시오.
+// 이 클래스의 구현에 대해서는 SlidingPuzzleApp.cpp을 참조하십시오.
 //
 
 class CSlidingPuzzleApp : public CWinAppEx

@@ -188,7 +188,7 @@
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="OutputWnd.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="SlidingPuzzle.h" />
+    <ClInclude Include="SlidingPuzzleApp.h" />
     <ClInclude Include="SlidingPuzzleDoc.h" />
     <ClInclude Include="SlidingPuzzleView.h" />
     <ClInclude Include="stdafx.h" />
@@ -197,7 +197,7 @@
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="OutputWnd.cpp" />
-    <ClCompile Include="SlidingPuzzle.cpp" />
+    <ClCompile Include="SlidingPuzzleApp.cpp" />
     <ClCompile Include="SlidingPuzzleDoc.cpp" />
     <ClCompile Include="SlidingPuzzleView.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -228,6 +228,11 @@
     <Image Include="res\Toolbar256.bmp" />
     <Image Include="res\writelarge.bmp" />
     <Image Include="res\writesmall.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SlidingPuzzleEngine\SlidingPuzzleEngine.vcxproj">
+      <Project>{ca937613-06ee-4d49-95d3-517fbcb51dbc}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

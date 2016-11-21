@@ -13,7 +13,7 @@
 //
 
 #include "stdafx.h"
-#include "SlidingPuzzle.h"
+#include "SlidingPuzzleApp.h"
 
 #include "MainFrm.h"
 

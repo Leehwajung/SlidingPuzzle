@@ -13,11 +13,11 @@ SlidingPuzzleMFC.vcxproj
 SlidingPuzzleMFC.vcxproj.filters
     응용 프로그램 마법사를 사용하여 생성된 VC++ 프로젝트의 필터 파일입니다. 이 파일에는 프로젝트의 파일과 필터 간의 연결 정보가 들어 있습니다. 이러한 연결은 특정 노드에서 유사한 확장명으로 그룹화된 파일을 표시하기 위해 IDE에서 사용됩니다. 예를 들어 ".cpp" 파일은 "소스 파일" 필터와 연결되어 있습니다.
 
-SlidingPuzzle.h
+SlidingPuzzleApp.h
     해당 응용 프로그램의 기본 헤더 파일입니다.
     여기에는 resource.h를 비롯한 다른 프로젝트별 헤더가 포함되어 있으며 CSlidingPuzzleApp 응용 프로그램 클래스가 선언되어 있습니다.
 
-SlidingPuzzle.cpp
+SlidingPuzzleApp.cpp
     이는 응용 프로그램 클래스 CSlidingPuzzleApp가 포함된 기본 응용 프로그램 소스 파일입니다.
 
 SlidingPuzzle.rc
