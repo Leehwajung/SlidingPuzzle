@@ -27,9 +27,6 @@
     <ClInclude Include="targetver.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="SlidingPuzzleEngine.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="SlidingPuzzle.h">
       <Filter>헤더 파일\Game</Filter>
     </ClInclude>
@@ -42,12 +39,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="dllmain.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="SlidingPuzzleEngine.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="SlidingPuzzle.cpp">

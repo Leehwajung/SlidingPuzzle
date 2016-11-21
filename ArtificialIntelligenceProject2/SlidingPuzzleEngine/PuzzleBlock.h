@@ -1,16 +1,13 @@
 #pragma once
-namespace {
-#include "SlidingPuzzleEngine.h"
-}
 
 class PuzzleBlock sealed
 {
 	/* Constructor */
 public :
-	SLIDINGPUZZLE_API PuzzleBlock();
+	PuzzleBlock();
 
 	/* Accessor */
-	SLIDINGPUZZLE_API int getID();
+	int getID();
 
 	/* Attribute */
 private:

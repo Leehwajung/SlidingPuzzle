@@ -1,7 +1,8 @@
 #include "pch.h"
 #include "SlidingPuzzle.h"
 
-namespace SlidingPuzzleSpace {
+namespace SlidingPuzzleSpace
+{
 	SlidingPuzzle::SlidingPuzzle(int height, int width)
 		:m_Height(height), m_Width(width)
 	{
@@ -20,7 +21,7 @@ namespace SlidingPuzzleSpace {
 			delete[] m_Blocks;
 		}
 		if (m_Goal) {
-			delete[] m_Blocks;
+			delete[] m_Goal;
 		}
 		if (m_BlockRepo) {
 			delete[] m_BlockRepo;
