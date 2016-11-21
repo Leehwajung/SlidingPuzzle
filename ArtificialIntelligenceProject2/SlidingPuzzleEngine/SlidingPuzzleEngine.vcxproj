@@ -190,12 +190,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Direction.h" />
+    <ClInclude Include="PuzzleBlock.h" />
+    <ClInclude Include="SlidingPuzzle.h" />
     <ClInclude Include="SlidingPuzzleEngine.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="PuzzleBlock.cpp" />
+    <ClCompile Include="SlidingPuzzle.cpp" />
     <ClCompile Include="SlidingPuzzleEngine.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
