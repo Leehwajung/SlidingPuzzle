@@ -26,12 +26,19 @@
 #define new DEBUG_NEW
 #endif
 
+using namespace Gdiplus;
+
 
 // CSlidingPuzzleView
 
 IMPLEMENT_DYNCREATE(CSlidingPuzzleView, CView)
 
 BEGIN_MESSAGE_MAP(CSlidingPuzzleView, CView)
+	ON_WM_LBUTTONDOWN()
+	ON_WM_LBUTTONUP()
+	ON_WM_MOUSEMOVE()
+	ON_COMMAND(ID_GAME_AI, &CSlidingPuzzleView::OnGameAI)
+	ON_UPDATE_COMMAND_UI(ID_GAME_AI, &CSlidingPuzzleView::OnUpdateGameAI)
 END_MESSAGE_MAP()
 
 
@@ -58,14 +65,34 @@ BOOL CSlidingPuzzleView::PreCreateWindow(CREATESTRUCT& cs)
 
 // CSlidingPuzzleView 그리기
 
-void CSlidingPuzzleView::OnDraw(CDC* /*pDC*/)
+void CSlidingPuzzleView::OnDraw(CDC* pDC)
 {
 	CSlidingPuzzleDoc* pDoc = GetDocument();
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
 
+	/* 출력 대상 */
+	Graphics graphicsDC(*pDC);	// gdi+ 그리기를 위한 객체 https://msdn.microsoft.com/en-us/library/windows/desktop/ms534453(v=vs.85).aspx
+
+	/****************************** 더블 버퍼링 ******************************/
+	CRect rect;
+	GetClientRect(rect);
+	Bitmap bmpCanvas(rect.right, rect.bottom);		// 캔버스 비트맵 생성
+	Graphics graphicsCanvas(&bmpCanvas);			// 캔버스 그래픽스 생성
+	graphicsCanvas.Clear(Color::White);				// 캔버스 배경색 지정
+	/*************************************************************************/
+
+	graphicsCanvas.SetSmoothingMode(SmoothingModeHighQuality);	// Antialising
+
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
+
+
+
+
+	/**************************************** 더블 버퍼링 ****************************************/
+	graphicsDC.DrawImage(&bmpCanvas, rect.left, rect.top, rect.right, rect.bottom);	// 캔버스 그리기
+	/*********************************************************************************************/
 }
 
 
@@ -92,3 +119,41 @@ CSlidingPuzzleDoc* CSlidingPuzzleView::GetDocument() const // 디버그되지 않은 버
 
 // CSlidingPuzzleView 메시지 처리기
 
+
+
+void CSlidingPuzzleView::OnLButtonDown(UINT nFlags, CPoint point)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	CView::OnLButtonDown(nFlags, point);
+}
+
+
+void CSlidingPuzzleView::OnLButtonUp(UINT nFlags, CPoint point)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	CView::OnLButtonUp(nFlags, point);
+}
+
+
+void CSlidingPuzzleView::OnMouseMove(UINT nFlags, CPoint point)
+{
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	CView::OnMouseMove(nFlags, point);
+}
+
+
+void CSlidingPuzzleView::OnGameAI()
+{
+	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	m_bAIMode = !m_bAIMode;
+}
+
+
+void CSlidingPuzzleView::OnUpdateGameAI(CCmdUI *pCmdUI)
+{
+	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
+	pCmdUI->SetCheck(m_bAIMode);
+}

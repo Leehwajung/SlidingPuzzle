@@ -14,6 +14,8 @@
 
 #pragma once
 
+using SlidingPuzzleSpace::SlidingPuzzle;
+
 
 class CSlidingPuzzleDoc : public CDocument
 {
@@ -24,6 +26,7 @@ protected:	// serialization에서만 만들어집니다.
 
 // 특성입니다.
 public:
+	SlidingPuzzle *m_pPuzzle = nullptr;
 
 // 작업입니다.
 public:

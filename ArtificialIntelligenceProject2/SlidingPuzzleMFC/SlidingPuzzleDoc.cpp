@@ -27,6 +27,8 @@
 #define new DEBUG_NEW
 #endif
 
+#define PUZZLESIZE 4
+
 
 // CSlidingPuzzleDoc
 
@@ -46,6 +48,9 @@ CSlidingPuzzleDoc::CSlidingPuzzleDoc()
 
 CSlidingPuzzleDoc::~CSlidingPuzzleDoc()
 {
+	if (m_pPuzzle) {
+		delete m_pPuzzle;
+	}
 }
 
 BOOL CSlidingPuzzleDoc::OnNewDocument()
@@ -55,6 +60,8 @@ BOOL CSlidingPuzzleDoc::OnNewDocument()
 
 	// TODO: 여기에 재초기화 코드를 추가합니다.
 	// SDI 문서는 이 문서를 다시 사용합니다.
+
+	m_pPuzzle = new SlidingPuzzle(PUZZLESIZE, PUZZLESIZE);
 
 	return TRUE;
 }

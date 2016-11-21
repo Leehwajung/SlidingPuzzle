@@ -185,7 +185,7 @@ BEGIN
     END
     POPUP "도움말(&H)"
     BEGIN
-        MENUITEM "Sliding Puzzle 정보(&A)...",     ID_APP_ABOUT
+        MENUITEM "Sliding Puzzle 정보(&A)...",    ID_APP_ABOUT
     END
 END
 
@@ -217,7 +217,7 @@ END
 
 IDR_HELP_MENU MENU
 BEGIN
-    MENUITEM "Sliding Puzzle 정보(&A)...",     ID_APP_ABOUT
+    MENUITEM "Sliding Puzzle 정보(&A)...",    ID_APP_ABOUT
 END
 
 IDR_THEME_MENU MENU
@@ -471,6 +471,11 @@ END
 STRINGTABLE
 BEGIN
     IDS_EDIT_MENU           "편집"
+END
+
+STRINGTABLE
+BEGIN
+    ID_GAME_AI              "인공지능 컴퓨터가 퍼즐을 맞춥니다.\n인공지능 설정/해제"
 END
 
 #endif    // 한국어(대한민국) resources

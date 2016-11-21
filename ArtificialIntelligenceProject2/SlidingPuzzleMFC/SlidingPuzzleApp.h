@@ -39,6 +39,7 @@ public:
 // 구현입니다.
 	UINT  m_nAppLook;
 	BOOL  m_bHiColorIcons;
+	ULONG_PTR m_nGdiplusToken;	// https://msdn.microsoft.com/en-us/library/windows/desktop/aa383751(v=vs.85).aspx#ULONG_PTR
 
 	virtual void PreLoadState();
 	virtual void LoadCustomState();

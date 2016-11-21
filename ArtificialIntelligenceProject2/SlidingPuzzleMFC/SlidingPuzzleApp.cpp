@@ -25,6 +25,10 @@
 #define new DEBUG_NEW
 #endif
 
+using Gdiplus::GdiplusStartupInput;
+using Gdiplus::GdiplusStartup;
+using Gdiplus::GdiplusShutdown;
+
 
 // CSlidingPuzzleApp
 
@@ -139,6 +143,18 @@ BOOL CSlidingPuzzleApp::InitInstance()
 	//  SDI 응용 프로그램에서는 ProcessShellCommand 후에 이러한 호출이 발생해야 합니다.
 	// 끌어서 놓기에 대한 열기를 활성화합니다.
 	m_pMainWnd->DragAcceptFiles();
+
+	// The GdiplusStartupInput structure holds a block of arguments 
+	// that are required by the GdiplusStartup function.
+	// https://msdn.microsoft.com/en-us/library/windows/desktop/ms534067(v=vs.85).aspx
+	GdiplusStartupInput gdiplusStartupInput;
+
+	// The GdiplusStartup function initializes Windows GDI+.
+	// Call GdiplusStartup before making any other GDI+ calls, 
+	// and call GdiplusShutdown when you have finished using GDI+.
+	// https://msdn.microsoft.com/en-us/library/windows/desktop/ms534077(v=vs.85).aspx
+	GdiplusStartup(&m_nGdiplusToken, &gdiplusStartupInput, NULL);
+
 	return TRUE;
 }
 
@@ -146,6 +162,11 @@ int CSlidingPuzzleApp::ExitInstance()
 {
 	//TODO: 추가한 추가 리소스를 처리합니다.
 	AfxOleTerm(FALSE);
+
+	// The GdiplusShutdown function cleans up resources used by Windows GDI+.
+	// Each call to GdiplusStartup should be paired with a call to GdiplusShutdown.
+	// https://msdn.microsoft.com/en-us/library/windows/desktop/ms534076(v=vs.85).aspx
+	GdiplusShutdown(m_nGdiplusToken);
 
 	return CWinAppEx::ExitInstance();
 }
