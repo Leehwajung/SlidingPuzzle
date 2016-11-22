@@ -1,23 +1,30 @@
 #pragma once
 
-class PuzzleBlock sealed
+namespace SlidingPuzzleSpace
 {
-	/* Constructor */
-public :
-	PuzzleBlock();
+	class PuzzleBlock sealed
+	{
+	public :
+		/* Constructor */
+		// Constructor
+		PuzzleBlock();
 
-	/* Accessor */
-	int getID();
+		/* Accessor */
+		// 퍼즐 블록 번호
+		int getID();
 
-	/* Attribute */
-private:
-	int m_ID;
+	private:
+		/* Attribute */
+		int m_ID;	// 퍼즐 블록 번호
 
-	/* Support */
-	static int m_NextID;
-};
+		/* Support */
+		static int m_NextID;	// 퍼즐 블록 번호를 부여하기 위한 인자
+	};
 
-inline int PuzzleBlock::getID()
-{
-	return m_ID;
+	inline int PuzzleBlock::getID()
+	{
+		return m_ID;
+	}
+
+	typedef PuzzleBlock* PuzzleBlockPtr;
 }

@@ -2,7 +2,7 @@
 
 namespace SlidingPuzzleSpace
 {
-	enum Direction
+	enum class Direction
 	{
 		UP      = 0x3,
 		LEFT    = 0x6,
