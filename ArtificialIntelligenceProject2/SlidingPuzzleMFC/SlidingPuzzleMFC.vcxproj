@@ -187,6 +187,7 @@
   <ItemGroup>
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="OutputWnd.h" />
+    <ClInclude Include="PuzzleBlockRect.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SlidingPuzzleApp.h" />
     <ClInclude Include="SlidingPuzzleDoc.h" />
@@ -197,6 +198,7 @@
   <ItemGroup>
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="OutputWnd.cpp" />
+    <ClCompile Include="PuzzleBlockRect.cpp" />
     <ClCompile Include="SlidingPuzzleApp.cpp" />
     <ClCompile Include="SlidingPuzzleDoc.cpp" />
     <ClCompile Include="SlidingPuzzleView.cpp" />

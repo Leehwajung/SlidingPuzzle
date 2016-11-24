@@ -26,7 +26,10 @@
 #define new DEBUG_NEW
 #endif
 
+#define PADDING 10;
+
 using namespace Gdiplus;
+using namespace SlidingPuzzleSpace;
 
 
 // CSlidingPuzzleView
@@ -72,27 +75,33 @@ void CSlidingPuzzleView::OnDraw(CDC* pDC)
 	if (!pDoc)
 		return;
 
-	/* 출력 대상 */
+	// 출력 대상
 	Graphics graphicsDC(*pDC);	// gdi+ 그리기를 위한 객체 https://msdn.microsoft.com/en-us/library/windows/desktop/ms534453(v=vs.85).aspx
 
-	/****************************** 더블 버퍼링 ******************************/
-	CRect rect;
-	GetClientRect(rect);
-	Bitmap bmpCanvas(rect.right, rect.bottom);		// 캔버스 비트맵 생성
-	Graphics graphicsCanvas(&bmpCanvas);			// 캔버스 그래픽스 생성
-	graphicsCanvas.Clear(Color::White);				// 캔버스 배경색 지정
-	/*************************************************************************/
+	// Graphics 설정 (for Double Buffering)
+	CRect cliRect;
+	GetClientRect(cliRect);
+	Bitmap bmpCanvas(cliRect.right, cliRect.bottom);	// 캔버스 비트맵 생성
+	Graphics canvas(&bmpCanvas);						// 캔버스 그래픽스 생성
+	canvas.Clear(Color::White);							// 캔버스 배경색 지정
 
-	graphicsCanvas.SetSmoothingMode(SmoothingModeHighQuality);	// Antialising
+	// Antialising
+	canvas.SetSmoothingMode(SmoothingModeHighQuality);
 
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
+	SlidingPuzzle *pPuzzle = pDoc->m_pPuzzle;
+	
+	int xSize = cliRect.Width() / pPuzzle->getWidth();
+	int ySize = cliRect.Height() / pPuzzle->getHeight();
 
 
 
+	//pPuzzle->
 
-	/**************************************** 더블 버퍼링 ****************************************/
-	graphicsDC.DrawImage(&bmpCanvas, rect.left, rect.top, rect.right, rect.bottom);	// 캔버스 그리기
-	/*********************************************************************************************/
+
+
+	// 캔버스 그리기 (for Double Buffering)
+	graphicsDC.DrawImage(&bmpCanvas, cliRect.left, cliRect.top, cliRect.right, cliRect.bottom);	// 캔버스 그리기
 }
 
 

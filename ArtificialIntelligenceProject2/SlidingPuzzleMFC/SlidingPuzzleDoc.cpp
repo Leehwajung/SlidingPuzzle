@@ -62,6 +62,7 @@ BOOL CSlidingPuzzleDoc::OnNewDocument()
 	// SDI 문서는 이 문서를 다시 사용합니다.
 
 	m_pPuzzle = new SlidingPuzzle(PUZZLESIZE, PUZZLESIZE);
+	
 
 	return TRUE;
 }

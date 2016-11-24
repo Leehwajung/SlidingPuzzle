@@ -49,6 +49,7 @@
 
 #include <gdiplus.h>
 #include "SlidingPuzzle.h"
+#include "PuzzleBlockRect.h"
 
 
 

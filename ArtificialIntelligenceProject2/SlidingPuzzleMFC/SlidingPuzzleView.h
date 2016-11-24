@@ -26,6 +26,8 @@ protected:	// serialization에서만 만들어집니다.
 public:
 	CSlidingPuzzleDoc* GetDocument() const;
 	BOOL m_bAIMode = FALSE;
+	CPuzzleBlockRect **m_Blocks = NULL;
+	CPuzzleBlockRect *m_BlockRepo = NULL;
 
 // 작업입니다.
 public:
