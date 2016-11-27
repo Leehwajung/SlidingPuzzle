@@ -1,6 +1,6 @@
 #pragma once
 
-#include "PuzzleBlock.h"
+#include "TileBlock.h"
 #include "Direction.h"
 
 namespace SlidingPuzzleSpace
@@ -64,16 +64,16 @@ namespace SlidingPuzzleSpace
 
 	private:
 		/* Attributes */
-		PuzzleBlockPtr **m_Blocks = nullptr;	// 섞여 있는 블록 2차원 배열
-		PuzzleBlockPtr **m_Goal = nullptr;		// 완성 목표 2차원 배열
+		TileBlockPtr **m_Blocks = nullptr;	// 섞여 있는 블록 2차원 배열
+		TileBlockPtr **m_Goal = nullptr;		// 완성 목표 2차원 배열
 		int m_Width = 0;						// 퍼즐의 너비
 		int m_Height = 0;						// 퍼즐의 높이
 
 
 		/* Support */
-		PuzzleBlockPtr *m_BlockArr = nullptr;	// 섞여 있는 블록 1차원 배열
-		PuzzleBlockPtr *m_GoalArr = nullptr;	// 완성 목표 1차원 배열
-		PuzzleBlock *m_BlockRepo = nullptr;		// 전체 블록들을 순서대로 가지고 있는 저장소 배열
+		TileBlockPtr *m_BlockArr = nullptr;	// 섞여 있는 블록 1차원 배열
+		TileBlockPtr *m_GoalArr = nullptr;	// 완성 목표 1차원 배열
+		TileBlock *m_BlockRepo = nullptr;		// 전체 블록들을 순서대로 가지고 있는 저장소 배열
 	};
 
 	inline int SlidingPuzzle::getWidth()

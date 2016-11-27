@@ -7,11 +7,11 @@ namespace SlidingPuzzleSpace
 		:m_Height(height), m_Width(width)
 	{
 		int size = height * width;
-		m_BlockRepo = new PuzzleBlock[size];
-		m_BlockArr = new PuzzleBlockPtr[size];
-		m_Blocks = new PuzzleBlockPtr*[size];
-		m_GoalArr = new PuzzleBlockPtr[size];
-		m_Goal = new PuzzleBlockPtr*[size];
+		m_BlockRepo = new TileBlock[size];
+		m_BlockArr = new TileBlockPtr[size];
+		m_Blocks = new TileBlockPtr*[size];
+		m_GoalArr = new TileBlockPtr[size];
+		m_Goal = new TileBlockPtr*[size];
 
 		for (int i = 0; i < height; i++) {
 			m_Blocks[i] = &m_BlockArr[i * width];
@@ -101,12 +101,12 @@ namespace SlidingPuzzleSpace
 			return false;
 		}
 
-		PuzzleBlockPtr src = m_Blocks[y][x];
-		PuzzleBlockPtr dst = m_Blocks[dy][dx];
+		TileBlockPtr src = m_Blocks[y][x];
+		TileBlockPtr dst = m_Blocks[dy][dx];
 
 		if (src->getID() == BLANK_BLOCK_ID
 				|| dst->getID() == BLANK_BLOCK_ID) {
-			PuzzleBlockPtr tmp = src;
+			TileBlockPtr tmp = src;
 			src = dst;
 			dst = tmp;
 			return true;
