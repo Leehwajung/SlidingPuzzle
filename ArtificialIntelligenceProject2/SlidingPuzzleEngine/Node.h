@@ -10,7 +10,7 @@ namespace SlidingPuzzleSpace
 	class Node sealed : public State
 	{
 	public:
-		Node(TileBlockRepoPtr repo, TileID* idArr /*= nullptr*/);
+		Node(TileBlockRepo& repo, TileID* idArr = nullptr);
 		~Node();
 
 	private:

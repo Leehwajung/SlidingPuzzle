@@ -3,5 +3,5 @@
 
 namespace SlidingPuzzleSpace
 {
-	TileID TileBlock::m_NextID = DEFAULTSTARTID;
+	TileID TileBlock::m_NextID = DEFAULT_START_ID;
 }

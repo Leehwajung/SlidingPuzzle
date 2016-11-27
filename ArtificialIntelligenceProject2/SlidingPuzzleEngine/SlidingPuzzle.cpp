@@ -4,128 +4,40 @@
 namespace SlidingPuzzleSpace
 {
 	SlidingPuzzle::SlidingPuzzle(int height, int width)
-		:m_Height(height), m_Width(width)
 	{
-		int size = height * width;
-		m_BlockRepo = new TileBlock[size];
-		m_BlockArr = new TileBlockPtr[size];
-		m_Blocks = new TileBlockPtr*[size];
-		m_GoalArr = new TileBlockPtr[size];
-		m_Goal = new TileBlockPtr*[size];
+		m_BlockRepo = new TileBlockRepo(height, width);
 
-		for (int i = 0; i < height; i++) {
-			m_Blocks[i] = &m_BlockArr[i * width];
-			m_Goal[i] = &m_GoalArr[i * width];
-		}
-
-		initPuzzle();
-		initGoal();
+		m_CurrState = new State(*m_BlockRepo);
+		m_Goal = new State(*m_BlockRepo);
 	}
 
 	SlidingPuzzle::~SlidingPuzzle()
 	{
-		if (m_Blocks) {
-			delete[] m_Blocks;
-		}
-		if (m_BlockArr) {
-			delete[] m_BlockArr;
-		}
-		if (m_Goal) {
-			delete[] m_Goal;
-		}
-		if (m_GoalArr) {
-			delete[] m_GoalArr;
-		}
+		deleteStates();
+		deleteGoal();
 		if (m_BlockRepo) {
-			delete[] m_BlockRepo;
+			delete m_BlockRepo;
 		}
 	}
 
-	void SlidingPuzzle::initPuzzle()
+	bool SlidingPuzzle::moveBlock(Direction movingTargetPos)
 	{
-		for (int i = 0; i < getSize(); i++) {
-			m_BlockArr[i] = &m_BlockRepo[i];
-		}
-	}
-
-	void SlidingPuzzle::initPuzzle(int* idArr)
-	{
-		for (int i = 0; i < getSize(); i++) {
-			m_BlockArr[i] = &m_BlockRepo[idArr[i]];
-		}
-	}
-
-	void SlidingPuzzle::initGoal()
-	{
-		for (int i = 0; i < getSize(); i++) {
-			m_GoalArr[i] = &m_BlockRepo[i];
-		}
-	}
-
-	void SlidingPuzzle::initGoal(int* idArr)
-	{
-		for (int i = 0; i < getSize(); i++) {
-			m_GoalArr[i] = &m_BlockRepo[idArr[i]];
-		}
-	}
-
-	bool SlidingPuzzle::moveBlock(int x, int y, Direction dir)
-	{
-		int dx = x, dy = y;
-		switch (dir) {
-		case Direction::UP:
-			if (y <= 0) {
-				return false;
-			}
-			dy--;
-			break;
-		case Direction::LEFT:
-			if (x <= 0) {
-				return false;
-			}
-			dx--;
-			break;
-		case Direction::RIGHT:
-			if (x >= m_Width - 1) {
-				return false;
-			}
-			dx++;
-			break;
-		case Direction::DOWN:
-			if (y >= m_Height - 1) {
-				return false;
-			}
-			dy++;
-			break;
-		case Direction::NODIR:
+		m_CurrState = new State(*m_CurrState, movingTargetPos);
+		if (m_CurrState->equalsPred()) {
+			StatePtr deleteDst = m_CurrState;
+			m_CurrState = m_CurrState->getPred();
+			delete deleteDst;
 			return false;
-		}
-
-		TileBlockPtr src = m_Blocks[y][x];
-		TileBlockPtr dst = m_Blocks[dy][dx];
-
-		if (src->getID() == BLANK_BLOCK_ID
-				|| dst->getID() == BLANK_BLOCK_ID) {
-			TileBlockPtr tmp = src;
-			src = dst;
-			dst = tmp;
-			return true;
-		}
-		return false;
-	}
-
-	bool SlidingPuzzle::isSolved()
-	{
-		for (int i = 0; i < getSize(); i++) {
-			if (m_BlockArr[i] != m_GoalArr[i]) {
-				return false;
-			}
 		}
 		return true;
 	}
 
-	int SlidingPuzzle::getSize()
+	void SlidingPuzzle::deleteStates()
 	{
-		return m_Width * m_Height;
+		for (StatePtr pred = m_CurrState, curr = nullptr; pred;) {
+			curr = pred;
+			pred = pred->getPred();
+			delete curr;
+		}
 	}
 }

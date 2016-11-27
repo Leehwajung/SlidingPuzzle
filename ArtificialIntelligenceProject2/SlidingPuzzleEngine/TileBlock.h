@@ -1,6 +1,6 @@
 #pragma once
 
-#define DEFAULTSTARTID	((TileID) 0)
+#define DEFAULT_START_ID	((TileID) 0)
 
 namespace SlidingPuzzleSpace
 {
@@ -15,7 +15,7 @@ namespace SlidingPuzzleSpace
 
 		/* Operation */
 		// 퍼즐 아이디 시작 번호 초기화
-		static void resetStartID(TileID id /* = DEFAULTSTARTID */);
+		static void resetStartID(TileID id = DEFAULT_START_ID);
 
 		/* Accessor */
 		// 퍼즐 블록 번호
@@ -35,7 +35,7 @@ namespace SlidingPuzzleSpace
 	{
 	}
 
-	inline void TileBlock::resetStartID(TileID id = DEFAULTSTARTID)
+	inline void TileBlock::resetStartID(TileID id/* = DEFAULT_START_ID*/)
 	{
 		m_NextID = id;
 	}

@@ -3,7 +3,7 @@
 
 namespace SlidingPuzzleSpace
 {
-	Node::Node(TileBlockRepoPtr repo, TileID* idArr = nullptr)
+	Node::Node(TileBlockRepo& repo, TileID* idArr/* = nullptr*/)
 		:State(repo, idArr)
 	{
 	}
