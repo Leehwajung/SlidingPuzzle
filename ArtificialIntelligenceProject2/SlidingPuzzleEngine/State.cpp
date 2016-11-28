@@ -8,30 +8,21 @@ namespace SlidingPuzzleSpace
 	{
 		initializeBlocks();
 
-		if (idArr) {
-			int dx = 0, dy = 0;
-			for (int i = 0; i < getSize(); i++) {
-				m_BlockArr[i] = m_BlockRepo[idArr[i]];
-				if (idArr[i] == 0) {
-					m_nBlankX = dx;
-					m_nBlankY = dy;
-				}
-				else {
-					if (dx < getWidth() - 1) {
-						dx++;
-					}
-					else {
-						dx = 0;
-						dy++;
-					}
-				}
+		int dx = 0, dy = 0;
+		for (int i = 0; i < getSize(); i++) {
+			m_BlockArr[i] = idArr ? m_BlockRepo[idArr[i]] : m_BlockRepo[i];
+
+			if (m_BlockArr[i]->isBlank()) {
+				m_nBlankX = dx;
+				m_nBlankY = dy;
 			}
-		}
-		else {
-			m_nBlankX = DEFAULT_BLANK_X;
-			m_nBlankY = DEFAULT_BLANK_Y;
-			for (int i = 0; i < getSize(); i++) {
-				m_BlockArr[i] = m_BlockRepo[i];
+
+			if (dx < getWidth() - 1) {
+				dx++;
+			}
+			else {
+				dx = 0;
+				dy++;
 			}
 		}
 	}

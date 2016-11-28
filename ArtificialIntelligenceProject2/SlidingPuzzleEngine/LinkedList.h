@@ -14,6 +14,7 @@ namespace SlidingPuzzleSpace
 	};
 
 
+	/* 노드에 대한 포인터들을 가지는 연결리스트 */
 	class LinkedList
 	{
 	public:

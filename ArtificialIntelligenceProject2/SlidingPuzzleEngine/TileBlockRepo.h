@@ -4,15 +4,21 @@
 
 namespace SlidingPuzzleSpace
 {
+#define DEFAULT_BLANK	0	// 타일이 없는 셀에는 0을 넣어 놓는다.
+
 	class TileBlockRepo
 	{
 	public:
-		TileBlockRepo(int height, int width);
+		TileBlockRepo(int height, int width, 
+			TileID blankID = DEFAULT_BLANK, TileID startID = DEFAULT_START_ID);
 		~TileBlockRepo();
 
 
 		/* Operator */
+
+		// 저장소 접근
 		TileBlock* operator[](int index) const;
+
 
 		/* Accessors */
 
@@ -38,11 +44,19 @@ namespace SlidingPuzzleSpace
 
 
 
-	inline TileBlockRepo::TileBlockRepo(int height, int width)
+	inline TileBlockRepo::TileBlockRepo(int height, int width, 
+		TileID blankID/* = DEFAULT_BLANK*/, TileID startID/* = DEFAULT_START_ID*/)
 		:m_Height(height), m_Width(width)
 	{
-		TileBlock::resetStartID();
-		m_BlockRepo = new TileBlock[height * width];
+		TileBlock::resetStartID(startID);
+		int size = height * width;
+		m_BlockRepo = new TileBlock[size];
+		for (int i = 0; i < size; i++) {
+			if (m_BlockRepo[i].getID() == blankID) {
+				m_BlockRepo[i].setBlank();
+				break;
+			}
+		}
 	}
 
 	inline TileBlockRepo::~TileBlockRepo()
@@ -71,6 +85,8 @@ namespace SlidingPuzzleSpace
 	{
 		return m_Height;
 	}
+
+
 
 	typedef TileBlockRepo* TileBlockRepoPtr;
 }
