@@ -40,7 +40,7 @@
       <Filter>헤더 파일\Game</Filter>
     </ClInclude>
     <ClInclude Include="LinkedList.h">
-      <Filter>헤더 파일\Game</Filter>
+      <Filter>헤더 파일\Game\AI A%2a</Filter>
     </ClInclude>
     <ClInclude Include="TileBlock.h">
       <Filter>헤더 파일\Game</Filter>
@@ -66,7 +66,7 @@
       <Filter>소스 파일\Game</Filter>
     </ClCompile>
     <ClCompile Include="LinkedList.cpp">
-      <Filter>소스 파일\Game</Filter>
+      <Filter>소스 파일\Game\AI A%2a</Filter>
     </ClCompile>
     <ClCompile Include="TileBlock.cpp">
       <Filter>소스 파일\Game</Filter>

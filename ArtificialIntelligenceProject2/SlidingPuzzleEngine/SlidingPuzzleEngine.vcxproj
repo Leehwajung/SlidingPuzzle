@@ -197,7 +197,6 @@
     <ClInclude Include="TileBlockRepo.h" />
     <ClInclude Include="Direction.h" />
     <ClInclude Include="Node.h" />
-
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

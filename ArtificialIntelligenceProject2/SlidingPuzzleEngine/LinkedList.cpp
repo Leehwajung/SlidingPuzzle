@@ -8,7 +8,6 @@ namespace SlidingPuzzleSpace
 	{
 	}
 
-
 	LinkedList::~LinkedList()
 	{
 		for (LinkedListNodePtr next = m_pHead, curr = nullptr; next;) {
