@@ -3,13 +3,21 @@
 
 namespace SlidingPuzzleSpace
 {
-	Node::Node(TileBlockRepo& repo, TileID* idArr/* = nullptr*/)
-		:State(repo, idArr)
+	Node::Node(TileBlockRepo& repo, State& goal, TileID* idArr/* = nullptr*/)
+		: State(repo, idArr)
 	{
+		calculateCosts(goal);
 	}
 
+	Node::Node(Node& pred, Direction& movingTargetPos, State& goal)
+		: State(pred, movingTargetPos)
+	{
+		calculateCosts(goal);
+	}
 
 	Node::~Node()
 	{
 	}
+
+
 }

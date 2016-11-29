@@ -4,9 +4,9 @@
 namespace SlidingPuzzleSpace
 {
 	State::State(TileBlockRepo& repo, TileID* idArr/* = nullptr*/)
-		: m_BlockRepo(repo), m_pPred(nullptr), m_bEqualsPred(false)
+		: m_BlockRepo(repo), m_pPred(nullptr), m_nRound(0), m_bEqualsPred(false)
 	{
-		initializeBlocks();
+		generateBlocks();
 
 		int dx = 0, dy = 0;
 		for (int i = 0; i < getSize(); i++) {
@@ -31,6 +31,7 @@ namespace SlidingPuzzleSpace
 		: State(pred)
 	{
 		m_pPred = &pred;
+		m_nRound++;
 
 		switch (movingTargetPos) {
 		case Direction::UP:
@@ -82,9 +83,9 @@ namespace SlidingPuzzleSpace
 	State::State(State& other)
 		: m_BlockRepo(other.m_BlockRepo), m_pPred(other.m_pPred),
 		m_nBlankX(other.m_nBlankX), m_nBlankY(other.m_nBlankY),
-		m_bEqualsPred(other.m_bEqualsPred)
+		m_nRound(other.m_nRound), m_bEqualsPred(other.m_bEqualsPred)
 	{
-		initializeBlocks();
+		generateBlocks();
 		for (int i = 0; i < getSize(); i++) {
 			m_BlockArr[i] = other.m_BlockArr[i];
 		}
@@ -121,7 +122,18 @@ namespace SlidingPuzzleSpace
 		return true;
 	}
 
-	void State::initializeBlocks()
+	int State::getDiffSize(State& other)
+	{
+		int num = 0;
+		for (int i = 0; i < getSize(); i++) {
+			if (m_Blocks[i] != other.m_Blocks[i]) {
+				num++;
+			}
+		}
+		return num;
+	}
+
+	void State::generateBlocks()
 	{
 		int size = getSize();
 		m_BlockArr = new TileBlockPtr[size];

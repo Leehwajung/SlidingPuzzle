@@ -73,6 +73,7 @@ namespace SlidingPuzzleSpace
 	};
 
 
+
 	inline void SlidingPuzzle::initPuzzle(int* idArr/* = nullptr*/)
 	{
 		deleteStates();

@@ -43,6 +43,9 @@ namespace SlidingPuzzleSpace
 		// 동일 비교
 		bool equals(State& other);
 
+		// 잘못 놓여진 타일의 개수 (h^)
+		int getDiffSize(State& other);
+
 
 		/* Accessors */
 
@@ -58,6 +61,9 @@ namespace SlidingPuzzleSpace
 		// 퍼즐의 높이
 		int getHeight();
 
+		// 라운드(턴) 번호 (현재까지 이동 횟수) (g^)
+		int getRound();
+
 		// 이전 상태와 같은가
 		bool equalsPred();
 
@@ -66,14 +72,16 @@ namespace SlidingPuzzleSpace
 		/* Sub-Operation */
 
 		// 생성자에서 사용할 블록 초기화 연산
-		void initializeBlocks();
+		void generateBlocks();
 
 
+	protected:
 		/* Attributes */
 		TileBlockPtr **m_Blocks = nullptr;	// 섞여 있는 블록 2차원 배열
 		StatePtr m_pPred = nullptr;			// 부모에 대한 포인터 (탐색트리 (TR) 은 구현할 필요가 없다. 각 노드의 pred 포인터로 해결된다.)
 		int m_nBlankX = DEFAULT_BLANK_X;	// 비어있는 블록의 x 좌표
 		int m_nBlankY = DEFAULT_BLANK_Y;	// 비어있는 블록의 y 좌표
+		int m_nRound = 0;					// 라운드(턴) 번호 (현재까지 이동 횟수) (g^)
 		bool m_bEqualsPred = false;			// 이전 상태와 같은지 여부
 
 
@@ -101,6 +109,11 @@ namespace SlidingPuzzleSpace
 	inline int State::getHeight()
 	{
 		return m_BlockRepo.getHeight();
+	}
+
+	inline int State::getRound()
+	{
+		return m_nRound;
 	}
 
 	inline bool State::equalsPred()

@@ -36,7 +36,7 @@ namespace SlidingPuzzleSpace
 	{
 		for (StatePtr pred = m_CurrState, curr = nullptr; pred;) {
 			curr = pred;
-			pred = pred->getPred();
+			pred = curr->getPred();
 			delete curr;
 		}
 	}

@@ -10,13 +10,67 @@ namespace SlidingPuzzleSpace
 	class Node sealed : public State
 	{
 	public:
-		Node(TileBlockRepo& repo, TileID* idArr = nullptr);
+		/* Constructors / Destructor */
+
+		// Constructor of First Node
+		Node(TileBlockRepo& repo, State& goal, TileID* idArr = nullptr);
+		
+		// Constructor of Later Nodes
+		Node(Node& pred, Direction& movingTargetPos, State& goal);
+
+		// Destructor
 		~Node();
 
+
+		/* Accessors */
+
+		// get f^
+		double getFhat();
+
+		// get g^
+		double getGhat();
+
+		// get h^
+		double getHhat();
+
+
 	private:
-		double m_dblFhat = 0;
-		double m_dblGhat = 0;
-		double m_dblHhat = 0;
+		/* Sub-Operation */
+
+		// Calculate g^, h^ and f^
+		void calculateCosts(State& goal);
+
+
+		/* Attributes */
+		double m_dblFhat = 0;	// f^
+		double m_dblGhat = 0;	// g^
+		double m_dblHhat = 0;	// h^
 	};
+
+
+
+	inline void Node::calculateCosts(State& goal)
+	{
+		m_dblGhat = getRound();
+		m_dblHhat = getDiffSize(goal) - 1;
+		m_dblFhat = m_dblGhat + m_dblGhat;
+	}
+
+	inline double Node::getFhat()
+	{
+		return m_dblFhat;
+	}
+
+	inline double Node::getGhat()
+	{
+		return m_dblGhat;
+	}
+
+	inline double Node::getHhat()
+	{
+		return m_dblHhat;
+	}
+
+	typedef Node* NodePtr;
 }
 
