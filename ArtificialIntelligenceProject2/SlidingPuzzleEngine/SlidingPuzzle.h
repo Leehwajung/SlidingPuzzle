@@ -3,7 +3,7 @@
 #include "Direction.h"
 #include "TileBlock.h"
 #include "TileBlockRepo.h"
-#include "State.h"
+#include "Node.h"
 
 namespace SlidingPuzzleSpace
 {
@@ -58,14 +58,14 @@ namespace SlidingPuzzleSpace
 		/* Sub-Operations */
 
 		// 모든 상태 삭제
-		void deleteStates();
+		void deleteNodes();
 
 		// 목표 삭제
 		void deleteGoal();
 
 
 		/* Attributes */
-		StatePtr m_CurrState = nullptr;	// 섞여 있는 블록
+		NodePtr m_CurrNode = nullptr;	// 섞여 있는 블록
 		StatePtr m_Goal = nullptr;		// 완성 목표
 
 		/* Support */
@@ -76,8 +76,8 @@ namespace SlidingPuzzleSpace
 
 	inline void SlidingPuzzle::initPuzzle(int* idArr/* = nullptr*/)
 	{
-		deleteStates();
-		m_CurrState = new State(*m_BlockRepo, idArr);
+		deleteNodes();
+		m_CurrNode = new Node(*m_BlockRepo, *m_Goal, idArr);
 	}
 
 	inline void SlidingPuzzle::initGoal(int* idArr/* = nullptr*/)
@@ -88,7 +88,7 @@ namespace SlidingPuzzleSpace
 
 	inline bool SlidingPuzzle::isSolved()
 	{
-		return m_CurrState->equals(*m_Goal);
+		return m_CurrNode->equals(*m_Goal);
 	}
 
 	inline int SlidingPuzzle::getSize()

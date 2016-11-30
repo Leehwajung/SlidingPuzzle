@@ -7,13 +7,13 @@ namespace SlidingPuzzleSpace
 	{
 		m_BlockRepo = new TileBlockRepo(height, width);
 
-		m_CurrState = new State(*m_BlockRepo);
 		m_Goal = new State(*m_BlockRepo);
+		m_CurrNode = new Node(*m_BlockRepo, *m_Goal);
 	}
 
 	SlidingPuzzle::~SlidingPuzzle()
 	{
-		deleteStates();
+		deleteNodes();
 		deleteGoal();
 		if (m_BlockRepo) {
 			delete m_BlockRepo;
@@ -22,21 +22,21 @@ namespace SlidingPuzzleSpace
 
 	bool SlidingPuzzle::moveBlock(Direction movingTargetPos)
 	{
-		m_CurrState = new State(*m_CurrState, movingTargetPos);
-		if (m_CurrState->equalsPred()) {
-			StatePtr deleteDst = m_CurrState;
-			m_CurrState = m_CurrState->getPred();
+		m_CurrNode = new Node(*m_CurrNode, movingTargetPos, *m_Goal);
+		if (m_CurrNode->equalsPred()) {
+			NodePtr deleteDst = m_CurrNode;
+			m_CurrNode = (Node*) m_CurrNode->getPred();
 			delete deleteDst;
 			return false;
 		}
 		return true;
 	}
 
-	void SlidingPuzzle::deleteStates()
+	void SlidingPuzzle::deleteNodes()
 	{
-		for (StatePtr pred = m_CurrState, curr = nullptr; pred;) {
+		for (NodePtr pred = m_CurrNode, curr = nullptr; pred;) {
 			curr = pred;
-			pred = curr->getPred();
+			pred = (Node*) curr->getPred();
 			delete curr;
 		}
 	}
