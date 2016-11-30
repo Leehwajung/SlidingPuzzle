@@ -49,6 +49,9 @@ namespace SlidingPuzzleSpace
 
 		/* Accessors */
 
+		// 블록 배열
+		TileBlockPtr** getBlocks();
+
 		// 이전 상태
 		StatePtr getPred();
 
@@ -90,6 +93,11 @@ namespace SlidingPuzzleSpace
 		TileBlockRepo &m_BlockRepo;			// 전체 블록들을 순서대로 가지고 있는 저장소
 	};
 
+
+	inline TileBlockPtr** State::getBlocks()
+	{
+		return m_Blocks;
+	}
 
 	inline StatePtr State::getPred()
 	{

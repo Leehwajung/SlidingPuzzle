@@ -44,6 +44,9 @@ namespace SlidingPuzzleSpace
 
 		/* Accessors */
 
+		// 현재 노드
+		NodePtr getCurrNode();
+
 		// 퍼즐 블록의 개수
 		int getSize();
 
@@ -89,6 +92,11 @@ namespace SlidingPuzzleSpace
 	inline bool SlidingPuzzle::isSolved()
 	{
 		return m_CurrNode->equals(*m_Goal);
+	}
+
+	inline NodePtr SlidingPuzzle::getCurrNode()
+	{
+		return m_CurrNode;
 	}
 
 	inline int SlidingPuzzle::getSize()
