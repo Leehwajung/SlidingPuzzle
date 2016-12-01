@@ -154,15 +154,51 @@ void CSlidingPuzzleView::OnMouseMove(UINT nFlags, CPoint point)
 }
 
 
+// TODO: 적당한 위치를 찾아서 리펙토링하기
+namespace	// 외부에서의 엑세스를 제한하기 위한 무명 네임스페이스
+{
+	// TODO: 적당한 위치를 찾아서 리펙토링하기
+	// 자식 확장
+	void expandChild(SlidingPuzzle* pPuzzle, LinkedList& openList)
+	{
+		Direction dirs[] = { Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT };
+		for (int i = 0; i < 4; i++) {
+			if (pPuzzle->moveBlock(dirs[i])) {
+				openList.put(pPuzzle->getCurrNode());
+			}
+		}
+	}
+}
+
+
+// TODO: 인공지능 동작으로 하드코딩 되어 있으니 나중에 시간 나면 사용자가 퍼즐을 움직일 수 있도록 수정하기
 void CSlidingPuzzleView::OnGameAI()
 {
+	CSlidingPuzzleDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
-	m_bAIMode = !m_bAIMode;
+	//m_bAIMode = !m_bAIMode;	// TODO: 인공지능으로 고정시켜 놓은 하드코딩이니 사용자 선택 가능하게 수정하기
+
+	LinkedList open(TRUE);		// OPEN LIST
+	LinkedList close(FALSE);	// CLOSE LIST
+	
+	open.put(pDoc->m_pPuzzle->getCurrNode());
+	Invalidate();		// 퍼즐 그리기
+	while (!pDoc->m_pPuzzle->isSolved()) {
+		NodePtr openHead = open.removeFirst();
+		close.put(openHead);
+		expandChild(pDoc->m_pPuzzle, open);
+		Invalidate();	// 퍼즐 그리기
+	}
 }
 
 
 void CSlidingPuzzleView::OnUpdateGameAI(CCmdUI *pCmdUI)
 {
 	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
-	pCmdUI->SetCheck(m_bAIMode);
+	//pCmdUI->SetCheck(m_bAIMode);
+	pCmdUI->SetCheck(TRUE);		// TODO: 인공지능으로 고정시켜 놓은 하드코딩이니 사용자 선택 가능하게 수정하기
 }

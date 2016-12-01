@@ -27,7 +27,7 @@
 #define new DEBUG_NEW
 #endif
 
-#define PUZZLESIZE 4
+#define PUZZLESIZE 4	// TODO: 퍼즐 사이즈 고정이므로 나중에 변경 가능하게 수정
 
 
 // CSlidingPuzzleDoc
@@ -61,8 +61,12 @@ BOOL CSlidingPuzzleDoc::OnNewDocument()
 	// TODO: 여기에 재초기화 코드를 추가합니다.
 	// SDI 문서는 이 문서를 다시 사용합니다.
 
-	m_pPuzzle = new SlidingPuzzle(PUZZLESIZE, PUZZLESIZE);
-	
+	// TODO: 아래는 특정 퍼즐 크기와 시작/목표 노드로 하드 코딩 되어 있으므로 수정할 것
+	m_pPuzzle = new SlidingPuzzle(PUZZLESIZE, PUZZLESIZE);	// TODO: 퍼즐 사이즈 고정이므로 나중에 변경 가능하게 수정
+	int startNode[] = { 0, 2, 4, 3,   10, 5, 8, 11,   12, 14, 9, 7,   1, 13, 6, 15 };
+	int goalNode[] = { 2, 4, 8, 3,   10, 5, 0, 11,   12, 14, 9, 7,   1, 13, 6, 15 };
+	m_pPuzzle->initPuzzle(startNode);
+	m_pPuzzle->initGoal(goalNode);
 
 	return TRUE;
 }

@@ -25,7 +25,7 @@ protected:	// serialization에서만 만들어집니다.
 // 특성입니다.
 public:
 	CSlidingPuzzleDoc* GetDocument() const;
-	BOOL m_bAIMode = FALSE;
+	BOOL m_bAIMode = TRUE;	// TODO: 시작을 인공지능으로 고정시켜 놓음, 사용자 입력으로 시작하도록 수정하기 (FALSE로 바꾸기)
 	CPuzzleBlockRect **m_Blocks = NULL;
 	CPuzzleBlockRect *m_BlockRepo = NULL;
 

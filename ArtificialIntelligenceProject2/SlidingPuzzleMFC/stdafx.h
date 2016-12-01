@@ -50,6 +50,7 @@
 #include <gdiplus.h>
 #include "SlidingPuzzle.h"
 #include "PuzzleBlockRect.h"
+#include "LinkedList.h"
 
 
 
