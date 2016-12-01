@@ -33,48 +33,40 @@ namespace SlidingPuzzleSpace
 		m_pPred = &pred;
 		m_nRound++;
 
+		m_bEqualsPred = true;
 		switch (movingTargetPos) {
 		case Direction::UP:
 			if (m_nBlankY > 0) {
 				m_nBlankY--;
-			}
-			else {
-				m_bEqualsPred = true;
+				m_bEqualsPred = false;
 			}
 			break;
 		case Direction::LEFT:
 			if (m_nBlankX > 0) {
 				m_nBlankX--;
-			}
-			else {
-				m_bEqualsPred = true;
+				m_bEqualsPred = false;
 			}
 			break;
 		case Direction::RIGHT:
 			if (m_nBlankX < getWidth() - 1) {
 				m_nBlankX++;
-			}
-			else {
-				m_bEqualsPred = true;
+				m_bEqualsPred = false;
 			}
 			break;
 		case Direction::DOWN:
 			if (m_nBlankY < getHeight() - 1) {
 				m_nBlankY++;
-			}
-			else {
-				m_bEqualsPred = true;
+				m_bEqualsPred = false;
 			}
 			break;
 		case Direction::NODIR:
-			m_bEqualsPred = true;
 			break;
 		}
 
 		if (!m_bEqualsPred) {
 			TileBlockPtr &src = m_Blocks[m_nBlankY][m_nBlankX];
 			TileBlockPtr &dst = m_Blocks[pred.m_nBlankY][pred.m_nBlankX];
-			TileBlockPtr &tmp = src;
+			TileBlockPtr tmp = src;
 			src = dst;
 			dst = tmp;
 		}

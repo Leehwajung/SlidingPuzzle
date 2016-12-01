@@ -37,15 +37,30 @@ namespace SlidingPuzzleSpace
 		// 사후 조건: 블록이 설정한 방향으로 이동되며, 성공하면 true를 실패하면 false를 반환함.
 		bool moveBlock(Direction movingTargetPos);
 
+		// 퍼즐 블록 이동
+		// 사전 조건: movedNode는 블록을 이동한 노드, movedNode의 pred는 현재 노드와 같아야 함.
+		// 사후 조건: 블록을 이동하는 데 성공하면 true를 실패하면 false를 반환함.
+		bool SlidingPuzzle::moveBlock(NodePtr movedNode);
+
 		// 퍼즐 풀이 성공 확인
 		// 사후 조건: 퍼즐 풀이를 성공했으면 true, 실패했으면 false를 반환함.
 		bool isSolved();
+
+		// 실행 취소 (Pred로 돌아가기)
+		// 사후 조건: CurrNode가 pred로 바뀌며, 성공했으면 true, 실패했으면 false를 반환함.
+		bool undo();
+
+		// 특정 노드로 이동
+		void displace(NodePtr node);
 
 
 		/* Accessors */
 
 		// 현재 노드
 		NodePtr getCurrNode();
+
+		// 목표 노드
+		StatePtr getGoal();
 
 		// 퍼즐 블록의 개수
 		int getSize();
@@ -79,13 +94,13 @@ namespace SlidingPuzzleSpace
 
 	inline void SlidingPuzzle::initPuzzle(int* idArr/* = nullptr*/)
 	{
-		deleteNodes();
+		//deleteNodes();
 		m_CurrNode = new Node(*m_BlockRepo, *m_Goal, idArr);
 	}
 
 	inline void SlidingPuzzle::initGoal(int* idArr/* = nullptr*/)
 	{
-		deleteGoal();
+		//deleteGoal();
 		m_Goal = new State(*m_BlockRepo, idArr);
 	}
 
@@ -94,9 +109,30 @@ namespace SlidingPuzzleSpace
 		return m_CurrNode->equals(*m_Goal);
 	}
 
+	inline bool SlidingPuzzle::undo()
+	{
+		if (m_CurrNode->getPred()) {
+			NodePtr pred = (NodePtr) m_CurrNode->getPred();
+			//delete m_CurrNode;
+			m_CurrNode = pred;
+			return true;
+		}
+		return false;
+	}
+
+	inline void SlidingPuzzle::displace(NodePtr node)
+	{
+		m_CurrNode = node;
+	}
+
 	inline NodePtr SlidingPuzzle::getCurrNode()
 	{
 		return m_CurrNode;
+	}
+
+	inline StatePtr SlidingPuzzle::getGoal()
+	{
+		return m_Goal;
 	}
 
 	inline int SlidingPuzzle::getSize()
