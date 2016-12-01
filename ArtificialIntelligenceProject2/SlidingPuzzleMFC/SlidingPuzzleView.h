@@ -14,6 +14,7 @@
 
 #pragma once
 
+using SlidingPuzzleSpace::LinkedList;
 
 class CSlidingPuzzleView : public CView
 {
@@ -28,6 +29,8 @@ public:
 	BOOL m_bAIMode = TRUE;	// TODO: 시작을 인공지능으로 고정시켜 놓음, 사용자 입력으로 시작하도록 수정하기 (FALSE로 바꾸기)
 	CPuzzleBlockRect **m_Blocks = NULL;
 	CPuzzleBlockRect *m_BlockRepo = NULL;
+	LinkedList *m_pOpen = NULL;
+	LinkedList *m_pClose = NULL;
 
 // 작업입니다.
 public:
@@ -56,6 +59,8 @@ protected:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg void OnGameAI();
 	afx_msg void OnUpdateGameAI(CCmdUI *pCmdUI);
+public:
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
 };
 
 #ifndef _DEBUG  // SlidingPuzzleView.cpp의 디버그 버전

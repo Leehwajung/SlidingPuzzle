@@ -27,8 +27,6 @@
 #define new DEBUG_NEW
 #endif
 
-#define PUZZLESIZE 4	// TODO: 퍼즐 사이즈 고정이므로 나중에 변경 가능하게 수정
-
 
 // CSlidingPuzzleDoc
 

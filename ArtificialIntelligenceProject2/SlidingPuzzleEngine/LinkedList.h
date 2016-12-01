@@ -28,6 +28,8 @@ namespace SlidingPuzzleSpace
 
 		NodePtr removeFirst();
 
+		NodePtr getLast();
+
 		bool isOrdered();
 
 

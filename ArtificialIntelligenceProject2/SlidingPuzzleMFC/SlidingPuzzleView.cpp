@@ -42,6 +42,7 @@ BEGIN_MESSAGE_MAP(CSlidingPuzzleView, CView)
 	ON_WM_MOUSEMOVE()
 	ON_COMMAND(ID_GAME_AI, &CSlidingPuzzleView::OnGameAI)
 	ON_UPDATE_COMMAND_UI(ID_GAME_AI, &CSlidingPuzzleView::OnUpdateGameAI)
+	ON_WM_TIMER()
 END_MESSAGE_MAP()
 
 
@@ -91,10 +92,30 @@ void CSlidingPuzzleView::OnDraw(CDC* pDC)
 	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
 	SlidingPuzzle *pPuzzle = pDoc->m_pPuzzle;
 	
-	int xSize = cliRect.Width() / pPuzzle->getWidth();
-	int ySize = cliRect.Height() / pPuzzle->getHeight();
+	float xSize = float(cliRect.Width()) / float(pPuzzle->getWidth());
+	float ySize = float(cliRect.Height()) / float(pPuzzle->getHeight());
+	
+	// TODO: 아래를 CPuzzleBlockRect를 사용하도록 리펙토링하기
+	const Pen pen(Color::Black);
+	const SolidBrush brush(Color::Black);
+	TileBlockPtr **blocks = pDoc->m_pPuzzle->getCurrNode()->getBlocks();
+	for (int i = 0; i < PUZZLESIZE; i++) {
+		for (int j = 0; j < PUZZLESIZE; j++) {
+			const RectF drawingArea(xSize * i, ySize * j, xSize, ySize);
+			canvas.DrawRectangle(&pen, drawingArea);
 
-
+			TileID id = blocks[j][i]->getID();
+			if (id != 0) {
+				CString num;
+				FontFamily fontfamily(_T("Arial"));
+				num.Format(_T("%d"), blocks[j][i]->getID());
+				Gdiplus::Font font(&fontfamily, 50, FontStyleRegular, UnitPixel);
+				Gdiplus::StringFormat format;
+				//format.SetAlignment(StringAlignmentCenter);
+				canvas.DrawString(num, num.GetLength(), &font, drawingArea, &format, &brush);
+			}
+		}
+	}
 
 	//pPuzzle->
 
@@ -159,13 +180,23 @@ namespace	// 외부에서의 엑세스를 제한하기 위한 무명 네임스페이스
 {
 	// TODO: 적당한 위치를 찾아서 리펙토링하기
 	// 자식 확장
-	void expandChild(SlidingPuzzle* pPuzzle, LinkedList& openList)
+	void expandChild(SlidingPuzzle* pPuzzle, LinkedList& openList, NodePtr openHead)
 	{
+		pPuzzle->displace(openHead);
 		Direction dirs[] = { Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT };
+		//NodePtr currNode = pPuzzle->getCurrNode();
 		for (int i = 0; i < 4; i++) {
-			if (pPuzzle->moveBlock(dirs[i])) {
-				openList.put(pPuzzle->getCurrNode());
+			NodePtr movedNode = new Node(*openHead, dirs[i], *pPuzzle->getGoal());
+			if (!movedNode->equalsPred()) {
+				pPuzzle->moveBlock(movedNode);
+				openList.put(movedNode);
 			}
+			
+
+
+			//if (pPuzzle->moveBlock(dirs[i])) {
+
+			//}
 		}
 	}
 }
@@ -182,17 +213,13 @@ void CSlidingPuzzleView::OnGameAI()
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
 	//m_bAIMode = !m_bAIMode;	// TODO: 인공지능으로 고정시켜 놓은 하드코딩이니 사용자 선택 가능하게 수정하기
 
-	LinkedList open(TRUE);		// OPEN LIST
-	LinkedList close(FALSE);	// CLOSE LIST
+	m_pOpen = new LinkedList(TRUE);		// OPEN LIST
+	m_pClose = new LinkedList(FALSE);	// CLOSE LIST
 	
-	open.put(pDoc->m_pPuzzle->getCurrNode());
+	m_pOpen->put(pDoc->m_pPuzzle->getCurrNode());
 	Invalidate();		// 퍼즐 그리기
-	while (!pDoc->m_pPuzzle->isSolved()) {
-		NodePtr openHead = open.removeFirst();
-		close.put(openHead);
-		expandChild(pDoc->m_pPuzzle, open);
-		Invalidate();	// 퍼즐 그리기
-	}
+
+	SetTimer(0, 1000, NULL);	// TODO: 풀이 속도 바꾸기
 }
 
 
@@ -201,4 +228,30 @@ void CSlidingPuzzleView::OnUpdateGameAI(CCmdUI *pCmdUI)
 	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
 	//pCmdUI->SetCheck(m_bAIMode);
 	pCmdUI->SetCheck(TRUE);		// TODO: 인공지능으로 고정시켜 놓은 하드코딩이니 사용자 선택 가능하게 수정하기
+}
+
+
+// TODO: 인공지능 동작으로 하드코딩 되어 있으니 나중에 시간 나면 사용자가 퍼즐을 움직일 수 있도록 수정하기
+void CSlidingPuzzleView::OnTimer(UINT_PTR nIDEvent)
+{
+	CSlidingPuzzleDoc* pDoc = GetDocument();
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return;
+
+	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+
+	if (!pDoc->m_pPuzzle->isSolved()) {
+		NodePtr openHead = m_pOpen->removeFirst();
+		m_pClose->put(openHead);
+		//pDoc->m_pPuzzle->undo();
+		expandChild(pDoc->m_pPuzzle, *m_pOpen, openHead);
+		Invalidate();
+	}
+	else {
+		KillTimer(0);
+		MessageBox(_T("완료!"));
+	}
+
+	CView::OnTimer(nIDEvent);
 }

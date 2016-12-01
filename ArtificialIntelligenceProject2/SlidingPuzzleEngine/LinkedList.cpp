@@ -19,25 +19,58 @@ namespace SlidingPuzzleSpace
 
 	void LinkedList::put(NodePtr node)
 	{
-		LinkedListNodePtr &curr = m_pHead;
+		LinkedListNodePtr newListNode = new LinkedListNode();
+		newListNode->nodePtr = node;
+
+		if (!m_pHead || !m_pTail) {
+			m_pHead = m_pTail = newListNode;
+			return;
+		}
+
 		if (m_bOrdered) {
+			LinkedListNodePtr curr = m_pHead;
+			LinkedListNodePtr prev = nullptr;
 			for (; curr != nullptr; curr = curr->next) {
 				if (curr->nodePtr->getFhat() > node->getFhat()) {
 					break;
 				}
+				prev = curr;
+			}
+
+			newListNode->next = curr;
+			prev->next = newListNode;
+			if (!curr) {
+				m_pTail = prev;
 			}
 		}
-
-		LinkedListNodePtr newListNode = new LinkedListNode;
-		newListNode->nodePtr = node;
-
-		if (curr) {
-			newListNode->next = curr;
-		}
 		else {
+			newListNode->next = nullptr;
+			m_pTail->next = newListNode;
 			m_pTail = newListNode;
 		}
-		curr = newListNode;
+
+
+
+
+		//LinkedListNodePtr &curr = m_pHead;
+		//if (m_bOrdered) {
+		//	for (; curr != nullptr; curr = curr->next) {
+		//		if (curr->nodePtr->getFhat() > node->getFhat()) {
+		//			break;
+		//		}
+		//	}
+		//}
+
+		//LinkedListNodePtr newListNode = new LinkedListNode;
+		//newListNode->nodePtr = node;
+
+		//if (curr) {
+		//	newListNode->next = curr;
+		//}
+		//else {
+		//	m_pTail = newListNode;
+		//}
+		//curr = newListNode;
 	}
 
 	NodePtr LinkedList::removeFirst()
@@ -47,5 +80,10 @@ namespace SlidingPuzzleSpace
 		delete m_pHead;
 		m_pHead = next;
 		return dst;
+	}
+
+	NodePtr LinkedList::getLast()
+	{
+		return m_pTail->nodePtr;
 	}
 }

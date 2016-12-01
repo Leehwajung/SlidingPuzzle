@@ -22,13 +22,27 @@ namespace SlidingPuzzleSpace
 
 	bool SlidingPuzzle::moveBlock(Direction movingTargetPos)
 	{
-		m_CurrNode = new Node(*m_CurrNode, movingTargetPos, *m_Goal);
-		if (m_CurrNode->equalsPred()) {
-			NodePtr deleteDst = m_CurrNode;
-			m_CurrNode = (Node*) m_CurrNode->getPred();
-			delete deleteDst;
+		NodePtr newNode = new Node(*m_CurrNode, movingTargetPos, *m_Goal);
+		if (newNode->equalsPred()) {
+			delete newNode;
 			return false;
 		}
+		m_CurrNode = newNode;
+		return true;
+	}
+
+	bool SlidingPuzzle::moveBlock(NodePtr movedNode)
+	{
+		if (!movedNode) {
+			return false;
+		}
+		if (m_CurrNode != movedNode->getPred()) {
+			return false;
+		}
+		if (movedNode->equalsPred()) {
+			return false;
+		}
+		m_CurrNode = movedNode;
 		return true;
 	}
 
