@@ -30,6 +30,8 @@ namespace SlidingPuzzleSpace
 
 		NodePtr getLast();
 
+		int getSize();
+
 		bool isOrdered();
 
 
@@ -37,10 +39,16 @@ namespace SlidingPuzzleSpace
 		LinkedListNodePtr m_pHead = nullptr;
 		LinkedListNodePtr m_pTail = nullptr;
 
+		int m_nSize = 0;
 		bool m_bOrdered = false;
 	};
 
 
+
+	inline int LinkedList::getSize()
+	{
+		return m_nSize;
+	}
 
 	inline bool LinkedList::isOrdered()
 	{

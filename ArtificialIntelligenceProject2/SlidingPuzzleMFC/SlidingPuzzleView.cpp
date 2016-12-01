@@ -19,8 +19,9 @@
 #include "SlidingPuzzleApp.h"
 #endif
 
-#include "SlidingPuzzleDoc.h"
+#include "MainFrm.h"
 #include "SlidingPuzzleView.h"
+#include "SlidingPuzzleDoc.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -193,7 +194,6 @@ namespace	// 외부에서의 엑세스를 제한하기 위한 무명 네임스페이스
 			}
 			
 
-
 			//if (pPuzzle->moveBlock(dirs[i])) {
 
 			//}
@@ -211,23 +211,53 @@ void CSlidingPuzzleView::OnGameAI()
 		return;
 
 	// TODO: 여기에 명령 처리기 코드를 추가합니다.
+	COutputWnd &WndOutput = ((CMainFrame*)AfxGetApp()->m_pMainWnd)->GetWndOutput();
+	WndOutput.AddResult(_T("인공지능 퍼즐 풀이를 시작합니다."));
+
 	//m_bAIMode = !m_bAIMode;	// TODO: 인공지능으로 고정시켜 놓은 하드코딩이니 사용자 선택 가능하게 수정하기
+	m_bAIMode = TRUE;
+
+	Invalidate();	// 퍼즐 그리기
 
 	m_pOpen = new LinkedList(TRUE);		// OPEN LIST
 	m_pClose = new LinkedList(FALSE);	// CLOSE LIST
 	
-	m_pOpen->put(pDoc->m_pPuzzle->getCurrNode());
-	Invalidate();		// 퍼즐 그리기
+	SlidingPuzzle *pPuzzle = pDoc->m_pPuzzle;
 
-	SetTimer(0, 1000, NULL);	// TODO: 풀이 속도 바꾸기
+	m_pOpen->put(pPuzzle->getCurrNode());
+
+	while (!pPuzzle->isSolved()) {
+		NodePtr openHead = m_pOpen->removeFirst();
+		m_pClose->put(openHead);
+		expandChild(pPuzzle, *m_pOpen, openHead);
+	}
+
+	m_pPath = new LinkedList(FALSE);
+	NodePtr curr = pPuzzle->getCurrNode();
+	while (curr->getPred()) {
+		m_pPath->put(curr);
+		curr = (NodePtr) curr->getPred();
+	}
+
+	WndOutput.AddResult(_T("퍼즐을 풀기 위한 최적의 방안(경로)을 찾았습니다."));
+	//pPuzzle->undo();
+
+	//for (; pPuzzle->undo(); curr = pPuzzle->getCurrNode()) {
+	//	m_pPath->put(curr);
+	//}
+	//m_pPath->put(curr);
+
+	m_nPathLen = 0;
+	pDoc->initializePuzzle();
+	SetTimer(0, 1000, NULL);	// TODO: 풀이 속도 바꾸기 기능 추가
 }
 
 
 void CSlidingPuzzleView::OnUpdateGameAI(CCmdUI *pCmdUI)
 {
 	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
-	//pCmdUI->SetCheck(m_bAIMode);
-	pCmdUI->SetCheck(TRUE);		// TODO: 인공지능으로 고정시켜 놓은 하드코딩이니 사용자 선택 가능하게 수정하기
+	pCmdUI->SetCheck(m_bAIMode);
+	//pCmdUI->SetCheck(TRUE);		// TODO: 인공지능으로 고정시켜 놓은 하드코딩이니 사용자 선택 가능하게 수정하기
 }
 
 
@@ -240,17 +270,27 @@ void CSlidingPuzzleView::OnTimer(UINT_PTR nIDEvent)
 		return;
 
 	// TODO: 여기에 메시지 처리기 코드를 추가 및/또는 기본값을 호출합니다.
+	COutputWnd &WndOutput = ((CMainFrame*)AfxGetApp()->m_pMainWnd)->GetWndOutput();
 
 	if (!pDoc->m_pPuzzle->isSolved()) {
-		NodePtr openHead = m_pOpen->removeFirst();
-		m_pClose->put(openHead);
-		//pDoc->m_pPuzzle->undo();
-		expandChild(pDoc->m_pPuzzle, *m_pOpen, openHead);
-		Invalidate();
+		m_nPathLen++;
+		pDoc->m_pPuzzle->moveBlock(m_pPath->removeFirst());
+		Invalidate();	// 퍼즐 그리기
+		WndOutput.AddResult(_T("블록을 이동합니다."));
 	}
 	else {
+		CString result;
+		result.Format(_T("퍼즐을 완성하였습니다. 블록 이동 횟수는 %d회입니다."), m_nPathLen);
+		WndOutput.AddResult(result);
+		if (m_pPath) {
+			delete m_pPath;
+		}
 		KillTimer(0);
-		MessageBox(_T("완료!"));
+		result.Format(_T("Success!!\nNumber of moves required = %d"), m_nPathLen);
+		MessageBox(result, _T("This is goal!"));
+		m_nPathLen = 0;
+		m_bAIMode = FALSE;
+		WndOutput.AddResult(_T("인공지능 퍼즐 풀이를 종료합니다."));
 	}
 
 	CView::OnTimer(nIDEvent);

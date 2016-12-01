@@ -30,6 +30,7 @@ public:
 
 // 작업입니다.
 public:
+	void initializePuzzle();
 
 // 재정의입니다.
 public:

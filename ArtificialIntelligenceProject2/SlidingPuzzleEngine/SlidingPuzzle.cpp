@@ -36,9 +36,9 @@ namespace SlidingPuzzleSpace
 		if (!movedNode) {
 			return false;
 		}
-		if (m_CurrNode != movedNode->getPred()) {
-			return false;
-		}
+		//if (m_CurrNode != movedNode->getPred()) {
+		//	return false;
+		//}
 		if (movedNode->equalsPred()) {
 			return false;
 		}

@@ -94,13 +94,13 @@ namespace SlidingPuzzleSpace
 
 	inline void SlidingPuzzle::initPuzzle(int* idArr/* = nullptr*/)
 	{
-		deleteNodes();
+		//deleteNodes();
 		m_CurrNode = new Node(*m_BlockRepo, *m_Goal, idArr);
 	}
 
 	inline void SlidingPuzzle::initGoal(int* idArr/* = nullptr*/)
 	{
-		deleteGoal();
+		//deleteGoal();
 		m_Goal = new State(*m_BlockRepo, idArr);
 	}
 
@@ -113,7 +113,7 @@ namespace SlidingPuzzleSpace
 	{
 		if (m_CurrNode->getPred()) {
 			NodePtr pred = (NodePtr) m_CurrNode->getPred();
-			delete m_CurrNode;
+			//delete m_CurrNode;
 			m_CurrNode = pred;
 			return true;
 		}

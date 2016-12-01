@@ -19,6 +19,8 @@ namespace SlidingPuzzleSpace
 
 	void LinkedList::put(NodePtr node)
 	{
+		m_nSize++;
+
 		LinkedListNodePtr newListNode = new LinkedListNode();
 		newListNode->nodePtr = node;
 
@@ -44,9 +46,13 @@ namespace SlidingPuzzleSpace
 			}
 		}
 		else {
-			newListNode->next = nullptr;
-			m_pTail->next = newListNode;
-			m_pTail = newListNode;
+			//newListNode->next = nullptr;
+			//m_pTail->next = newListNode;
+			//m_pTail = newListNode;
+
+			// 리스트의 헤드에서부터 밀어 넣음
+			newListNode->next = m_pHead;
+			m_pHead = newListNode;
 		}
 
 
@@ -75,6 +81,8 @@ namespace SlidingPuzzleSpace
 
 	NodePtr LinkedList::removeFirst()
 	{
+		m_nSize--;
+
 		NodePtr dst = m_pHead->nodePtr;
 		LinkedListNodePtr next = m_pHead->next;
 		delete m_pHead;
