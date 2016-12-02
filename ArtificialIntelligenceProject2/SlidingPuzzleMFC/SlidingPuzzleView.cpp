@@ -118,10 +118,6 @@ void CSlidingPuzzleView::OnDraw(CDC* pDC)
 		}
 	}
 
-	//pPuzzle->
-
-
-
 	// 캔버스 그리기 (for Double Buffering)
 	graphicsDC.DrawImage(&bmpCanvas, cliRect.left, cliRect.top, cliRect.right, cliRect.bottom);	// 캔버스 그리기
 }
@@ -185,18 +181,12 @@ namespace	// 외부에서의 엑세스를 제한하기 위한 무명 네임스페이스
 	{
 		pPuzzle->displace(openHead);
 		Direction dirs[] = { Direction::UP, Direction::DOWN, Direction::LEFT, Direction::RIGHT };
-		//NodePtr currNode = pPuzzle->getCurrNode();
 		for (int i = 0; i < 4; i++) {
 			NodePtr movedNode = new Node(*openHead, dirs[i], *pPuzzle->getGoal());
 			if (!movedNode->equalsPred()) {
 				pPuzzle->moveBlock(movedNode);
 				openList.put(movedNode);
 			}
-			
-
-			//if (pPuzzle->moveBlock(dirs[i])) {
-
-			//}
 		}
 	}
 }
@@ -219,6 +209,7 @@ void CSlidingPuzzleView::OnGameAI()
 
 	Invalidate();	// 퍼즐 그리기
 
+	// A*를 이용한 경로 찾기
 	m_pOpen = new LinkedList(TRUE);		// OPEN LIST
 	m_pClose = new LinkedList(FALSE);	// CLOSE LIST
 	
@@ -232,6 +223,7 @@ void CSlidingPuzzleView::OnGameAI()
 		expandChild(pPuzzle, *m_pOpen, openHead);
 	}
 
+	// 찾은 경로
 	m_pPath = new LinkedList(FALSE);
 	NodePtr curr = pPuzzle->getCurrNode();
 	while (curr->getPred()) {
@@ -240,13 +232,8 @@ void CSlidingPuzzleView::OnGameAI()
 	}
 
 	WndOutput.AddResult(_T("퍼즐을 풀기 위한 최적의 방안(경로)을 찾았습니다."));
-	//pPuzzle->undo();
 
-	//for (; pPuzzle->undo(); curr = pPuzzle->getCurrNode()) {
-	//	m_pPath->put(curr);
-	//}
-	//m_pPath->put(curr);
-
+	// 찾은 경로를 화면으로 보여주기
 	m_nPathLen = 0;
 	pDoc->initializePuzzle();
 	SetTimer(0, 1000, NULL);	// TODO: 풀이 속도 바꾸기 기능 추가
@@ -257,7 +244,6 @@ void CSlidingPuzzleView::OnUpdateGameAI(CCmdUI *pCmdUI)
 {
 	// TODO: 여기에 명령 업데이트 UI 처리기 코드를 추가합니다.
 	pCmdUI->SetCheck(m_bAIMode);
-	//pCmdUI->SetCheck(TRUE);		// TODO: 인공지능으로 고정시켜 놓은 하드코딩이니 사용자 선택 가능하게 수정하기
 }
 
 
@@ -282,14 +268,18 @@ void CSlidingPuzzleView::OnTimer(UINT_PTR nIDEvent)
 		CString result;
 		result.Format(_T("퍼즐을 완성하였습니다. 블록 이동 횟수는 %d회입니다."), m_nPathLen);
 		WndOutput.AddResult(result);
+
 		if (m_pPath) {
 			delete m_pPath;
 		}
 		KillTimer(0);
+
 		result.Format(_T("Success!!\nNumber of moves required = %d"), m_nPathLen);
 		MessageBox(result, _T("This is goal!"));
+
 		m_nPathLen = 0;
 		m_bAIMode = FALSE;
+
 		WndOutput.AddResult(_T("인공지능 퍼즐 풀이를 종료합니다."));
 	}
 
