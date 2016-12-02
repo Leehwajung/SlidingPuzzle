@@ -46,37 +46,10 @@ namespace SlidingPuzzleSpace
 			}
 		}
 		else {
-			//newListNode->next = nullptr;
-			//m_pTail->next = newListNode;
-			//m_pTail = newListNode;
-
 			// 리스트의 헤드에서부터 밀어 넣음
 			newListNode->next = m_pHead;
 			m_pHead = newListNode;
 		}
-
-
-
-
-		//LinkedListNodePtr &curr = m_pHead;
-		//if (m_bOrdered) {
-		//	for (; curr != nullptr; curr = curr->next) {
-		//		if (curr->nodePtr->getFhat() > node->getFhat()) {
-		//			break;
-		//		}
-		//	}
-		//}
-
-		//LinkedListNodePtr newListNode = new LinkedListNode;
-		//newListNode->nodePtr = node;
-
-		//if (curr) {
-		//	newListNode->next = curr;
-		//}
-		//else {
-		//	m_pTail = newListNode;
-		//}
-		//curr = newListNode;
 	}
 
 	NodePtr LinkedList::removeFirst()
@@ -88,10 +61,5 @@ namespace SlidingPuzzleSpace
 		delete m_pHead;
 		m_pHead = next;
 		return dst;
-	}
-
-	NodePtr LinkedList::getLast()
-	{
-		return m_pTail->nodePtr;
 	}
 }

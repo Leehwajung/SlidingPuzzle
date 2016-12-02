@@ -4,9 +4,9 @@
 namespace SlidingPuzzleSpace
 {
 	/* 상태 (즉, 노드)
-	 * n×m 타일블록을 하나의 클래스로 나타냄.
-	 * 이는 2차원 배열을 필드로 가지는 클래스를 정의하여 이용함.
-	 */
+	* n×m 타일블록을 하나의 클래스로 나타냄.
+	* 이는 2차원 배열을 필드로 가지는 클래스를 정의하여 이용함.
+	*/
 	class Node sealed : public State
 	{
 	public:
@@ -14,7 +14,7 @@ namespace SlidingPuzzleSpace
 
 		// Constructor of First Node
 		Node(TileBlockRepo& repo, State& goal, TileID* idArr = nullptr);
-		
+
 		// Constructor of Later Nodes
 		Node(Node& pred, Direction& movingTargetPos, State& goal);
 
@@ -43,8 +43,8 @@ namespace SlidingPuzzleSpace
 
 		/* Attributes */
 		double m_dblFhat = 0;	// f^
-		double m_dblGhat = 0;	// g^
-		double m_dblHhat = 0;	// h^
+		double m_dblGhat = 0;	// g^: n0부터 n 까지로의 지금까지 찾은 경로의 비용 (각 아크는 모두 비용이 1.0 으로 한다)
+		double m_dblHhat = 0;	// h^: 잘못 놓여진 타일의 수
 	};
 
 

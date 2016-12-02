@@ -236,6 +236,11 @@ void CSlidingPuzzleView::OnGameAI()
 	// 찾은 경로를 화면으로 보여주기
 	m_nPathLen = 0;
 	pDoc->initializePuzzle();
+
+	CString result;
+	result.Format(_T("[%d] 처음 상태입니다."), curr->getRound());
+	WndOutput.AddResult(result);
+
 	SetTimer(0, 1000, NULL);	// TODO: 풀이 속도 바꾸기 기능 추가
 }
 
@@ -260,9 +265,29 @@ void CSlidingPuzzleView::OnTimer(UINT_PTR nIDEvent)
 
 	if (!pDoc->m_pPuzzle->isSolved()) {
 		m_nPathLen++;
-		pDoc->m_pPuzzle->moveBlock(m_pPath->removeFirst());
+		NodePtr curr = m_pPath->removeFirst();
+		pDoc->m_pPuzzle->moveBlock(curr);
 		Invalidate();	// 퍼즐 그리기
-		WndOutput.AddResult(_T("블록을 이동합니다."));
+		LPCTSTR dir;
+		switch (curr->getMovedDir()) {
+		case SlidingPuzzleSpace::Direction::UP:
+			dir = _T("위로");
+			break;
+		case SlidingPuzzleSpace::Direction::LEFT:
+			dir = _T("왼쪽으로");
+			break;
+		case SlidingPuzzleSpace::Direction::RIGHT:
+			dir = _T("오른쪽으로");
+			break;
+		case SlidingPuzzleSpace::Direction::DOWN:
+			dir = _T("아래로");
+			break;
+		default:
+			return;
+		}
+		CString result;
+		result.Format(_T("[%d] 블록을 %s 이동합니다."), curr->getRound(), dir);
+		WndOutput.AddResult(result);
 	}
 	else {
 		CString result;
