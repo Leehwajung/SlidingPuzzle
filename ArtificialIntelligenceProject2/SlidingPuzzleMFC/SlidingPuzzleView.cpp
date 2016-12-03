@@ -226,10 +226,10 @@ void CSlidingPuzzleView::OnGameAI()
 	// 찾은 경로
 	m_pPath = new LinkedList(FALSE);
 	NodePtr curr = pPuzzle->getCurrNode();
-	while (curr->getPred()) {
+	do {
 		m_pPath->put(curr);
 		curr = (NodePtr) curr->getPred();
-	}
+	} while (curr->getPred());
 
 	WndOutput.AddResult(_T("퍼즐을 풀기 위한 최적의 방안(경로)을 찾았습니다."));
 
@@ -270,23 +270,23 @@ void CSlidingPuzzleView::OnTimer(UINT_PTR nIDEvent)
 		Invalidate();	// 퍼즐 그리기
 		LPCTSTR dir;
 		switch (curr->getMovedDir()) {
-		case SlidingPuzzleSpace::Direction::UP:
-			dir = _T("위로");
+		case Direction::UP:
+			dir = _T("윗");
 			break;
-		case SlidingPuzzleSpace::Direction::LEFT:
-			dir = _T("왼쪽으로");
+		case Direction::LEFT:
+			dir = _T("왼쪽 ");
 			break;
-		case SlidingPuzzleSpace::Direction::RIGHT:
-			dir = _T("오른쪽으로");
+		case Direction::RIGHT:
+			dir = _T("오른쪽 ");
 			break;
-		case SlidingPuzzleSpace::Direction::DOWN:
-			dir = _T("아래로");
+		case Direction::DOWN:
+			dir = _T("아랫");
 			break;
 		default:
 			return;
 		}
 		CString result;
-		result.Format(_T("[%d] 블록을 %s 이동합니다."), curr->getRound(), dir);
+		result.Format(_T("[%d] %s블록을 이동합니다."), curr->getRound(), dir);
 		WndOutput.AddResult(result);
 	}
 	else {
